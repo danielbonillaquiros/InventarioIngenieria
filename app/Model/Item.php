@@ -28,57 +28,40 @@ class Item extends AppModel {
 	public $validate = array(
 		'item_id' => array(
 			'blank' => array(
-				'rule' => array('blank'),
-				//'message' => 'Your custom message here',
-				//'allowEmpty' => false,
-				//'required' => false,
-				//'last' => false, // Stop validation after this rule
-				//'on' => 'create', // Limit validation to 'create' or 'update' operations
+				'rule' => 'blank',
+				'on' => 'create',
 			),
 		),
 		'item_description' => array(
 			'notEmpty' => array(
 				'rule' => array('notEmpty'),
-				//'message' => 'Your custom message here',
-				//'allowEmpty' => false,
-				//'required' => false,
-				//'last' => false, // Stop validation after this rule
-				//'on' => 'create', // Limit validation to 'create' or 'update' operations
+				'message' => 'The item name cannot be empty',
 			),
-			'custom' => array(
-				'rule' => array('custom'),
-				//'message' => 'Your custom message here',
-				//'allowEmpty' => false,
-				//'required' => false,
-				//'last' => false, // Stop validation after this rule
-				//'on' => 'create', // Limit validation to 'create' or 'update' operations
+			'words' => array(
+				'rule' => array('custom', '/([\w.-]+)+[\w+.-]/'),
 			),
 			'maxLength' => array(
-				'rule' => array('maxLength'),
-				//'message' => 'Your custom message here',
-				//'allowEmpty' => false,
-				//'required' => false,
-				//'last' => false, // Stop validation after this rule
-				//'on' => 'create', // Limit validation to 'create' or 'update' operations
+				'rule' => array('maxLength', 30),
+				'message' => 'The item name must not be longer than 30 characters',
+			),
+			'isUnique' => array(
+				'rule' => 'isUnique',
+				'message' => 'This item name already exists',
 			),
 		),
 		'item_unit_type' => array(
 			'notEmpty' => array(
 				'rule' => array('notEmpty'),
+				'message' => 'The item price cannot be empty',
+			),
+			//'inList' => array(
+				//'rule' => array('inList'),
 				//'message' => 'Your custom message here',
 				//'allowEmpty' => false,
 				//'required' => false,
 				//'last' => false, // Stop validation after this rule
 				//'on' => 'create', // Limit validation to 'create' or 'update' operations
-			),
-			'inList' => array(
-				'rule' => array('inList'),
-				//'message' => 'Your custom message here',
-				//'allowEmpty' => false,
-				//'required' => false,
-				//'last' => false, // Stop validation after this rule
-				//'on' => 'create', // Limit validation to 'create' or 'update' operations
-			),
+			//),
 		),
 		'item_price' => array(
 			'numeric' => array(
