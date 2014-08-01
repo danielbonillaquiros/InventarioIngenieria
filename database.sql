@@ -1,11 +1,3 @@
-SET SQL_MODE="NO_AUTO_VALUE_ON_ZERO";
-SET time_zone = "+00:00";
-
-/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
-/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
-/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
-/*!40101 SET NAMES utf8 */;
-
 CREATE TABLE IF NOT EXISTS categories (
   category_id int NOT NULL AUTO_INCREMENT,
   category_description varchar(30) NOT NULL,
@@ -13,6 +5,8 @@ CREATE TABLE IF NOT EXISTS categories (
   PRIMARY KEY (category_id)
 ) DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
+---------------------------------------------------------------------------------------------------------------------------
+-- used for easier unit selection from item creation
 CREATE TABLE IF NOT EXISTS units (
   unit_id int NOT NULL AUTO_INCREMENT,
   unit_name varchar(30) NOT NULL,
@@ -24,7 +18,7 @@ INSERT INTO units (unit_name) VALUES ("metro"),("segundo"),("mol"),("kilogramo")
 									 ("ohmio"),("siemens"),("faradio"),("tesla"),("weber"),("henrio"),("radian"),
 									 ("estereorradian"),("lumen"),("lux"),("becquerelio"),("gray"),("sievert"),("katal"),
 									 ("litro"),("bar"),("grado celsius");
-
+---------------------------------------------------------------------------------------------------------------------------
 CREATE TABLE IF NOT EXISTS items (
   item_id int NOT NULL AUTO_INCREMENT,
   item_description varchar(30) NOT NULL,
