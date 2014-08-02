@@ -31,118 +31,74 @@ class Item extends AppModel {
 		'item_id' => array(
 			'blank' => array(
 				'rule' => array('blank'),
-				//'message' => 'Your custom message here',
-				//'allowEmpty' => false,
-				//'required' => false,
-				//'last' => false, // Stop validation after this rule
-				//'on' => 'create', // Limit validation to 'create' or 'update' operations
+				'on' => 'create',
 			),
 		),
 		'item_description' => array(
 			'custom' => array(
-				'rule' => array('custom'),
-				//'message' => 'Your custom message here',
-				//'allowEmpty' => false,
-				//'required' => false,
-				//'last' => false, // Stop validation after this rule
-				//'on' => 'create', // Limit validation to 'create' or 'update' operations
+				'rule' => array('custom', '/([\w.-]+ )+[\w+.-]/'),
+				'message' => 'Item description must only contain numbers, letters and spaces.',
 			),
 			'maxLength' => array(
-				'rule' => array('maxLength'),
-				//'message' => 'Your custom message here',
-				//'allowEmpty' => false,
-				//'required' => false,
-				//'last' => false, // Stop validation after this rule
-				//'on' => 'create', // Limit validation to 'create' or 'update' operations
+				'rule' => array('maxLength', 30),
+				'message' => 'Item description must not be longer than 30 characters.',
 			),
 			'notEmpty' => array(
 				'rule' => array('notEmpty'),
-				//'message' => 'Your custom message here',
-				//'allowEmpty' => false,
-				//'required' => false,
-				//'last' => false, // Stop validation after this rule
-				//'on' => 'create', // Limit validation to 'create' or 'update' operations
+				'message' => 'Item description must not be empty.',
 			),
 		),
 		'item_unit_id' => array(
 			'numeric' => array(
 				'rule' => array('numeric'),
-				//'message' => 'Your custom message here',
-				//'allowEmpty' => false,
-				//'required' => false,
-				//'last' => false, // Stop validation after this rule
-				//'on' => 'create', // Limit validation to 'create' or 'update' operations
+				'message' => 'Item unit must be a number.',
 			),
 			'notEmpty' => array(
 				'rule' => array('notEmpty'),
-				//'message' => 'Your custom message here',
-				//'allowEmpty' => false,
-				//'required' => false,
-				//'last' => false, // Stop validation after this rule
-				//'on' => 'create', // Limit validation to 'create' or 'update' operations
+				'message' => 'Item unit must not be empty.',
 			),
 		),
 		'item_price' => array(
 			'numeric' => array(
 				'rule' => array('numeric'),
-				//'message' => 'Your custom message here',
-				//'allowEmpty' => false,
-				//'required' => false,
-				//'last' => false, // Stop validation after this rule
-				//'on' => 'create', // Limit validation to 'create' or 'update' operations
+				'message' => 'Item price must be a number.',
 			),
 			'notEmpty' => array(
 				'rule' => array('notEmpty'),
-				//'message' => 'Your custom message here',
-				//'allowEmpty' => false,
-				//'required' => false,
-				//'last' => false, // Stop validation after this rule
-				//'on' => 'create', // Limit validation to 'create' or 'update' operations
+				'message' => 'Item price must not be empty.',
 			),
 		),
 		'item_picture' => array(
 			'uploadError' => array(
 				'rule' => array('uploadError'),
-				//'message' => 'Your custom message here',
-				//'allowEmpty' => false,
-				//'required' => false,
-				//'last' => false, // Stop validation after this rule
-				//'on' => 'create', // Limit validation to 'create' or 'update' operations
+				'message' => 'The item picture upload failed.',
+				'allowEmpty' => true,
 			),
 			'fileSize' => array(
-				'rule' => array('fileSize'),
-				//'message' => 'Your custom message here',
-				//'allowEmpty' => false,
-				//'required' => false,
-				//'last' => false, // Stop validation after this rule
-				//'on' => 'create', // Limit validation to 'create' or 'update' operations
+				'rule' => array('fileSize', '<=', '1MB'),
+        'message' => 'Cover image must be less than 1MB.',
+				'allowEmpty' => true,
 			),
 			'mimeType' => array(
-				'rule' => array('mimeType'),
-				//'message' => 'Your custom message here',
-				//'allowEmpty' => false,
-				//'required' => false,
-				//'last' => false, // Stop validation after this rule
-				//'on' => 'create', // Limit validation to 'create' or 'update' operations
+				'rule' => array('mimeType', array('image/gif', 'image/png', 'image/jpg', 'image/jpeg')),
+        'message' => 'Please only upload images (gif, png, jpg).',
+        'allowEmpty' => true,
 			),
+      'processPictureUpload' => array(
+        'rule' => 'processPictureUpload',
+        'message' => 'Unable to process item picture upload.',
+        'allowEmpty' => true,
+      ),
 		),
 		'item_category_id' => array(
 			'numeric' => array(
 				'rule' => array('numeric'),
-				//'message' => 'Your custom message here',
-				//'allowEmpty' => false,
-				//'required' => false,
-				//'last' => false, // Stop validation after this rule
-				//'on' => 'create', // Limit validation to 'create' or 'update' operations
+				'message' => 'Item category must be a number.',
 			),
-			'notEmpty' => array(
+			/*'notEmpty' => array(
 				'rule' => array('notEmpty'),
-				//'message' => 'Your custom message here',
-				//'allowEmpty' => false,
-				//'required' => false,
-				//'last' => false, // Stop validation after this rule
-				//'on' => 'create', // Limit validation to 'create' or 'update' operations
-			),
+				'message' => 'Your custom message here',
+			),*/
 		),
 	);
 
@@ -154,19 +110,24 @@ class Item extends AppModel {
  * @var array
  */
 	public $belongsTo = array(
-		'ItemUnit' => array(
-			'className' => 'ItemUnit',
-			'foreignKey' => 'item_unit_id',
-			'conditions' => '',
-			'fields' => '',
-			'order' => ''
+		'Unit' => array(
+			'className' => 'Unit',
+			'foreignKey' => 'item_unit_id'
 		),
-		'ItemCategory' => array(
-			'className' => 'ItemCategory',
-			'foreignKey' => 'item_category_id',
-			'conditions' => '',
-			'fields' => '',
-			'order' => ''
+		'Category' => array(
+			'className' => 'Category',
+			'foreignKey' => 'item_category_id'
 		)
 	);
+
+  public function processPictureUpload($check = array()) {
+    if (!is_uploaded_file($check['issue_cover']['tmp_name'])) {
+      return false;
+    }
+    if (!move_uploaded_file($check['issue_cover']['tmp_name'], WWW_ROOT . 'img' . DS . 'uploads' . DS . $check['issue_cover']['name'])) {
+      return false;
+    }
+    $this->data[$this->alias]['issue_cover'] = 'uploads' . DS . $check['issue_cover']['name'];
+    return true;
+  }
 }

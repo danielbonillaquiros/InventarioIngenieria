@@ -34,9 +34,8 @@ class Category extends AppModel {
 		),
 		'category_description' => array(
 			'custom' => array(
-				'rule' => array('custom'),
-				'message' => 'Your custom message here',
-				//'on' => 'create', // Limit validation to 'create' or 'update' operations
+				'rule' => array('custom', '/([\w.-]+ )+[\w+.-]/'),
+				'message' => 'Category description must only contain letters, numbers and spaces.',
 			),
 			'notEmpty' => array(
 				'rule' => array('notEmpty'),
@@ -50,20 +49,24 @@ class Category extends AppModel {
 		'category_level' => array(
 			'numeric' => array(
 				'rule' => array('numeric'),
-				//'message' => 'Your custom message here',
-				//'allowEmpty' => false,
-				//'required' => false,
-				//'last' => false, // Stop validation after this rule
-				//'on' => 'create', // Limit validation to 'create' or 'update' operations
+				'message' => 'Category level must be a number.',
 			),
 			'notEmpty' => array(
 				'rule' => array('notEmpty'),
-				//'message' => 'Your custom message here',
-				//'allowEmpty' => false,
-				//'required' => false,
-				//'last' => false, // Stop validation after this rule
-				//'on' => 'create', // Limit validation to 'create' or 'update' operations
+				'message' => 'Category level must not be empty.',
 			),
 		),
 	);
+
+  /**
+ * hasMany associations
+ *
+ * @var array
+ */
+  public $hasMany = array(
+    'CategoryItems' => array(
+      'className' => 'Item',
+      'foreignKey' => 'item_category_id'
+    )
+  );
 }

@@ -29,38 +29,34 @@ class Unit extends AppModel {
 		'unit_id' => array(
 			'blank' => array(
 				'rule' => array('blank'),
-				//'message' => 'Your custom message here',
-				//'allowEmpty' => false,
-				//'required' => false,
-				//'last' => false, // Stop validation after this rule
-				//'on' => 'create', // Limit validation to 'create' or 'update' operations
+				'on' => 'create',
 			),
 		),
 		'unit_name' => array(
 			'custom' => array(
-				'rule' => array('custom'),
-				//'message' => 'Your custom message here',
-				//'allowEmpty' => false,
-				//'required' => false,
-				//'last' => false, // Stop validation after this rule
-				//'on' => 'create', // Limit validation to 'create' or 'update' operations
+				'rule' => array('custom', '/([\w.-]+ )+[\w+.-]/'),
+				'message' => 'Unit name must only contain letters, numbers and spaces.',
 			),
 			'notEmpty' => array(
 				'rule' => array('notEmpty'),
-				//'message' => 'Your custom message here',
-				//'allowEmpty' => false,
-				//'required' => false,
-				//'last' => false, // Stop validation after this rule
-				//'on' => 'create', // Limit validation to 'create' or 'update' operations
+				'message' => 'Unit name must not be empty.',
 			),
 			'maxLength' => array(
-				'rule' => array('maxLength'),
-				//'message' => 'Your custom message here',
-				//'allowEmpty' => false,
-				//'required' => false,
-				//'last' => false, // Stop validation after this rule
-				//'on' => 'create', // Limit validation to 'create' or 'update' operations
+				'rule' => array('maxLength', 30),
+				'message' => 'Unit name must not be longer than 30 characters.',
 			),
 		),
 	);
+
+  /**
+ * hasMany associations
+ *
+ * @var array
+ */
+  public $hasMany = array(
+    'UnitItems' => array(
+      'className' => 'Item',
+      'foreignKey' => 'item_unit_id'
+    )
+  );
 }
