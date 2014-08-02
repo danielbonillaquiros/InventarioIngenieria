@@ -1,39 +1,42 @@
 <div class="items index">
 	<h2><?php echo __('Items'); ?></h2>
-	<table cellpadding="0" cellspacing="0">
-	<thead>
-	<tr>
-			<th><?php echo $this->Paginator->sort('item_id'); ?></th>
-			<th><?php echo $this->Paginator->sort('item_description'); ?></th>
-			<th><?php echo $this->Paginator->sort('item_unit_id'); ?></th>
-			<th><?php echo $this->Paginator->sort('item_price'); ?></th>
-			<th><?php echo $this->Paginator->sort('item_picture'); ?></th>
-			<th><?php echo $this->Paginator->sort('item_category_id'); ?></th>
-			<th class="actions"><?php echo __('Actions'); ?></th>
-	</tr>
-	</thead>
-	<tbody>
-	<?php foreach ($items as $item): ?>
-	<tr>
-		<td><?php echo h($item['Item']['item_id']); ?>&nbsp;</td>
-		<td><?php echo h($item['Item']['item_description']); ?>&nbsp;</td>
-		<td>
-			<?php echo $this->Html->link($item['Unit']['unit_name'], array('controller' => 'units', 'action' => 'view', $item['Unit']['unit_id'])); ?>
-		</td>
-		<td><?php echo h($item['Item']['item_price']); ?>&nbsp;</td>
-		<td><?php echo h($item['Item']['item_picture']); ?>&nbsp;</td>
-		<td>
-			<?php echo $this->Html->link($item['Category']['category_description'], array('controller' => 'categories', 'action' => 'view', $item['Category']['category_id'])); ?>
-		</td>
-		<td class="actions">
-			<?php echo $this->Html->link(__('View'), array('action' => 'view', $item['Item']['item_id'])); ?>
-			<?php echo $this->Html->link(__('Edit'), array('action' => 'edit', $item['Item']['item_id'])); ?>
-			<?php echo $this->Form->postLink(__('Delete'), array('action' => 'delete', $item['Item']['item_id']), array(), __('Are you sure you want to delete # %s?', $item['Item']['item_id'])); ?>
-		</td>
-	</tr>
-<?php endforeach; ?>
-	</tbody>
-	</table>
+  <table cellpadding="0" cellspacing="0">
+            <?php echo $this->Html->tableHeaders(array(
+                $this->Paginator->sort('item_id'),
+                $this->Paginator->sort('item_description'),
+                $this->Paginator->sort('item_unit_id'),
+                $this->Paginator->sort('item_price'),
+                $this->Paginator->sort('item_picture'),
+                $this->Paginator->sort('item_category_id'),
+                __('Actions'),
+            ));
+
+            // Table contents.
+            $rows = array();
+            foreach ($items as $item) {
+                $row = array();
+                $row[] = h($item['Item']['item_id']);
+                $row[] = h($item['Item']['item_description']);
+                $row[] = h($item['Unit']['unit_name']);
+                $row[] = h($item['Item']['item_price']);
+                $row[] = $item['Item']['item_picture'] ? 'Y' : 'N';
+                $row[] = $this->Html->link($item['Category']['category_description'], array('controller' => 'categories', 'action' => 'view', $item['Category']['category_id']));
+                // Actions.
+                $actions = array();
+                $actions[] = $this->Html->link(__('View'), array('action' => 'view', $item['Item']['item_id']));
+                $actions[] = $this->Html->link(__('Edit'), array('action' => 'edit', $item['Item']['item_id']));
+                $actions[] = $this->Form->postLink(__('Delete'), array('action' => 'delete', $item['Item']['item_id']), null, __('Are you sure you want to delete # %s?', $item['Item']['item_id']));
+                $row[] = array(
+                    implode(' ', $actions),
+                    array('class' => 'actions'),
+                );
+                $rows[] = $row;
+            }
+            if (!empty($rows)) {
+                echo $this->Html->tableCells($rows);
+            }
+            ?>
+              </table>
 	<p>
 	<?php
 	echo $this->Paginator->counter(array(
