@@ -1,5 +1,5 @@
 <div class="items form">
-<?php echo $this->Form->create('Item'); ?>
+<?php echo $this->Form->create('Item', array('type' => 'file')); ?>
 	<fieldset>
 		<legend><?php echo __('Edit Item'); ?></legend>
 	<?php
@@ -7,7 +7,7 @@
 		echo $this->Form->input('item_description');
 		echo $this->Form->input('item_unit_id');
 		echo $this->Form->input('item_price');
-		echo $this->Form->input('item_picture');
+		echo $this->Form->input('item_picture', array('type' => 'file'));
 		echo $this->Form->input('item_category_id');
 	?>
 	</fieldset>
@@ -19,9 +19,8 @@
 
 		<li><?php echo $this->Form->postLink(__('Delete'), array('action' => 'delete', $this->Form->value('Item.item_id')), array(), __('Are you sure you want to delete # %s?', $this->Form->value('Item.item_id'))); ?></li>
 		<li><?php echo $this->Html->link(__('List Items'), array('action' => 'index')); ?></li>
-		<li><?php echo $this->Html->link(__('List Units'), array('controller' => 'units', 'action' => 'index')); ?> </li>
-		<li><?php echo $this->Html->link(__('New Unit'), array('controller' => 'units', 'action' => 'add')); ?> </li>
 		<li><?php echo $this->Html->link(__('List Categories'), array('controller' => 'categories', 'action' => 'index')); ?> </li>
 		<li><?php echo $this->Html->link(__('New Category'), array('controller' => 'categories', 'action' => 'add')); ?> </li>
+		<li><?php echo $this->Html->link(__('List Units'), array('controller' => 'units', 'action' => 'index')); ?> </li>
 	</ul>
 </div>
