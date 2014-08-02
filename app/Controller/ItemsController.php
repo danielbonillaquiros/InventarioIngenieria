@@ -49,7 +49,11 @@ class ItemsController extends AppController {
 	public function add() {
 		if ($this->request->is('post')) {
 			$this->Item->create();
-			if ($this->Item->save($this->request->data)) {
+      $data = $this->request->data['Item'];
+      if (!$data['item_picture']['name']) {
+        unset($data['item_picture']);
+      }
+			if ($this->Item->save($data)) {
 				$this->Session->setFlash(__('The item has been saved.'));
 				return $this->redirect(array('action' => 'index'));
 			} else {
@@ -73,7 +77,11 @@ class ItemsController extends AppController {
 			throw new NotFoundException(__('Invalid item'));
 		}
 		if ($this->request->is(array('post', 'put'))) {
-			if ($this->Item->save($this->request->data)) {
+			$data = $this->request->data['Item'];
+      if (!$data['item_picture']['name']) {
+        unset($data['item_picture']);
+      }
+			if ($this->Item->save($data)) {
 				$this->Session->setFlash(__('The item has been saved.'));
 				return $this->redirect(array('action' => 'index'));
 			} else {

@@ -23,7 +23,7 @@
 		</dd>
 		<dt><?php echo __('Item Picture'); ?></dt>
 		<dd>
-			<?php echo h($item['Item']['item_picture']); ?>
+			<?php if ($item['Item']['item_picture']) echo $this->Html->image($item['Item']['item_picture']); ?>
 			&nbsp;
 		</dd>
 		<dt><?php echo __('Category'); ?></dt>
@@ -40,9 +40,8 @@
 		<li><?php echo $this->Form->postLink(__('Delete Item'), array('action' => 'delete', $item['Item']['item_id']), array(), __('Are you sure you want to delete # %s?', $item['Item']['item_id'])); ?> </li>
 		<li><?php echo $this->Html->link(__('List Items'), array('action' => 'index')); ?> </li>
 		<li><?php echo $this->Html->link(__('New Item'), array('action' => 'add')); ?> </li>
-		<li><?php echo $this->Html->link(__('List Units'), array('controller' => 'units', 'action' => 'index')); ?> </li>
-		<li><?php echo $this->Html->link(__('New Unit'), array('controller' => 'units', 'action' => 'add')); ?> </li>
 		<li><?php echo $this->Html->link(__('List Categories'), array('controller' => 'categories', 'action' => 'index')); ?> </li>
 		<li><?php echo $this->Html->link(__('New Category'), array('controller' => 'categories', 'action' => 'add')); ?> </li>
+		<li><?php echo $this->Html->link(__('List Units'), array('controller' => 'units', 'action' => 'index')); ?> </li>
 	</ul>
 </div>

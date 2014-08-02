@@ -79,11 +79,6 @@ class Item extends AppModel {
         'message' => 'Cover image must be less than 1MB.',
 				'allowEmpty' => true,
 			),
-			'mimeType' => array(
-				'rule' => array('mimeType', array('image/gif', 'image/png', 'image/jpg', 'image/jpeg')),
-        'message' => 'Please only upload images (gif, png, jpg).',
-        'allowEmpty' => true,
-			),
       'processPictureUpload' => array(
         'rule' => 'processPictureUpload',
         'message' => 'Unable to process item picture upload.',
@@ -95,10 +90,10 @@ class Item extends AppModel {
 				'rule' => array('numeric'),
 				'message' => 'Item category must be a number.',
 			),
-			/*'notEmpty' => array(
+			'notEmpty' => array(
 				'rule' => array('notEmpty'),
-				'message' => 'Your custom message here',
-			),*/
+				'message' => 'Item category must not be empty.',
+			),
 		),
 	);
 
@@ -121,13 +116,13 @@ class Item extends AppModel {
 	);
 
   public function processPictureUpload($check = array()) {
-    if (!is_uploaded_file($check['issue_cover']['tmp_name'])) {
+    if (!is_uploaded_file($check['item_picture']['tmp_name'])) {
       return false;
     }
-    if (!move_uploaded_file($check['issue_cover']['tmp_name'], WWW_ROOT . 'img' . DS . 'uploads' . DS . $check['issue_cover']['name'])) {
+    if (!move_uploaded_file($check['item_picture']['tmp_name'], WWW_ROOT . 'img' . DS . 'uploads' . DS . $check['item_picture']['name'])) {
       return false;
     }
-    $this->data[$this->alias]['issue_cover'] = 'uploads' . DS . $check['issue_cover']['name'];
+    $this->data[$this->alias]['item_picture'] = 'uploads' . DS . $check['issue_cover']['name'];
     return true;
   }
 }
