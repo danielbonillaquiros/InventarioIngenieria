@@ -36,7 +36,7 @@ class Item extends AppModel {
 		),
 		'item_description' => array(
 			'custom' => array(
-				'rule' => array('custom', '/([\w.-]+ )+[\w+.-]/'),
+				'rule' => array('custom', '/([\w.-]+ )*[\w+.-]/'),
 				'message' => 'Item description must only contain numbers, letters and spaces.',
 			),
 			'maxLength' => array(

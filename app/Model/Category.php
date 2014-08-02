@@ -34,7 +34,7 @@ class Category extends AppModel {
 		),
 		'category_description' => array(
 			'custom' => array(
-				'rule' => array('custom', '/([\w.-]+ )+[\w+.-]/'),
+				'rule' => array('custom', '/([\w.-]+ )*[\w+.-]/'),
 				'message' => 'Category description must only contain letters, numbers and spaces.',
 			),
 			'notEmpty' => array(
