@@ -13,7 +13,9 @@ class UnitsControllerTest extends ControllerTestCase {
  * @var array
  */
 	public $fixtures = array(
-		'app.unit'
+		'app.unit',
+		'app.item',
+		'app.category'
 	);
 
 /**
