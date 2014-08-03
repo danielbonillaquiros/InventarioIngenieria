@@ -18,4 +18,4 @@ Some Handy Links
 
 Created by:
 - Jose Tomás Gómez Rojas
-- Daniel Bonilla Quirós :D
+- Daniel Bonilla Quirós 
