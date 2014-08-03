@@ -21,19 +21,20 @@ class CategoriesController extends UndoController {
  *
  * @return void
  */
+ 
 	public function index() {
 		$this->Category->recursive = 0;
 		$this->set('categories', $this->Paginator->paginate());
 	}
 
 /**
- * view method
+ * view method 
  *
  * @throws NotFoundException
  * @param string $id
  * @return void
  */
-	public function view($id = null) {
+	public function advanceView($id = null) {
 		if (!$this->Category->exists($id)) {
 			throw new NotFoundException(__('Invalid category'));
 		}
