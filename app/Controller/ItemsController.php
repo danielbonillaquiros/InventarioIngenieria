@@ -55,7 +55,7 @@ class ItemsController extends UndoController {
       }
 			if ($this->Item->save($data)) {
 				$this->Session->setFlash(__('The item has been saved.'));
-        $this->createMemento('add', array('type' => 'item', 'id' => $data['item_id']));
+        $this->createMemento('add', array('type' => 'item', 'id' => $this->Item->id));
 				return $this->redirect(array('action' => 'index'));
 			} else {
 				$this->Session->setFlash(__('The item could not be saved. Please, try again.'));
@@ -106,15 +106,27 @@ class ItemsController extends UndoController {
  */
 	public function delete($id = null) {
 		$this->Item->id = $id;
+    $data = array('type' => 'item',
+                  'id' => $this->Item->id,
+                  'item_description' => $this->Item->item_description,
+                  'item_unit_id' => $this->Item->item_unit_id,
+                  'item_price' => $this->Item->item_price,
+                  'item_picture' => $this->Item->item_picture,
+                  'item_category_id' => $this->Item->item_category_id);
 		if (!$this->Item->exists()) {
 			throw new NotFoundException(__('Invalid item'));
 		}
 		$this->request->allowMethod('post', 'delete');
 		if ($this->Item->delete()) {
 			$this->Session->setFlash(__('The item has been deleted.'));
+      $this->createMemento('delete', $data);
 		} else {
 			$this->Session->setFlash(__('The item could not be deleted. Please, try again.'));
 		}
 		return $this->redirect(array('action' => 'index'));
 	}
+
+  public function setMemento() {
+    parent::setMemento();
+  }
 }

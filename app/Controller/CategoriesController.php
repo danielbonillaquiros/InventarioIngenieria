@@ -51,6 +51,7 @@ class CategoriesController extends UndoController {
 			$this->Category->create();
 			if ($this->Category->save($this->request->data)) {
 				$this->Session->setFlash(__('The category has been saved.'));
+        $this->createMemento('add', array('type' => 'category', 'id' => $this->Category->id));
 				return $this->redirect(array('action' => 'index'));
 			} else {
 				$this->Session->setFlash(__('The category could not be saved. Please, try again.'));
@@ -106,4 +107,8 @@ class CategoriesController extends UndoController {
 		}
 		return $this->redirect(array('action' => 'index'));
 	}
+
+  public function setMemento() {
+    parent::setMemento();
+  }
 }
