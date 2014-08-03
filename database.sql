@@ -10,8 +10,15 @@ CREATE TABLE IF NOT EXISTS categories (
   category_id int NOT NULL AUTO_INCREMENT,
   category_description varchar(30) NOT NULL,
   category_level int NOT NULL,
-  PRIMARY KEY (category_id)
+  category_parent_id int NOT NULL,
+  PRIMARY KEY (category_id),
+  INDEX par_ind(category_parent_id),
+  FOREIGN KEY (category_parent_id)
+	REFERENCES categories(category_id)
+	ON DELETE CASCADE
 ) DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+
+INSERT INTO categories (category_id, category_description, category_level, category_parent_id) VALUES (-1,"Not categorized",-1,-1),(0,"Item",0,0);
 
 -- -------------------------------------------------------------------------------------------------------------------------
 -- used for easier unit selection from item creation

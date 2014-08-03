@@ -73,7 +73,12 @@ class Item extends AppModel {
 				'rule' => array('uploadError'),
 				'message' => 'The item picture upload failed.',
 				'allowEmpty' => true,
-			),
+      ),
+      /*'mimeType' => array(
+        'rule' => array('mimeType', array('image/gif', 'image/png', 'image/jpg', 'image/jpeg')),
+        'message' => 'Please only upload images (gif, png, jpg).',
+        'allowEmpty' => TRUE,
+      ),*/
 			'fileSize' => array(
 				'rule' => array('fileSize', '<=', '1MB'),
         'message' => 'Cover image must be less than 1MB.',

@@ -5,10 +5,10 @@
 	<?php
 		echo $this->Form->input('item_id');
 		echo $this->Form->input('item_description');
-		echo $this->Form->input('item_unit_id');
+		echo $this->Form->input('item_unit_id', array('options' => $units));
 		echo $this->Form->input('item_price');
 		echo $this->Form->input('item_picture', array('type' => 'file'));
-		echo $this->Form->input('item_category_id');
+		echo $this->Form->input('item_category_id', array('options' => $categories));
 	?>
 	</fieldset>
 <?php echo $this->Form->end(__('Submit')); ?>

@@ -56,6 +56,16 @@ class Category extends AppModel {
 				'message' => 'Category level must not be empty.',
 			),
 		),
+    'category_parent_id' => array(
+			'numeric' => array(
+				'rule' => array('numeric'),
+				'message' => 'Parent category must be a number.',
+			),
+			'notEmpty' => array(
+				'rule' => array('notEmpty'),
+				'message' => 'Parent category must not be empty.',
+			),
+		),
 	);
 
   /**

@@ -6,6 +6,7 @@
 		echo $this->Form->input('category_id');
 		echo $this->Form->input('category_description');
 		echo $this->Form->input('category_level');
+    echo $this->Form->input('category_parent_id', array('options' => $categories));
 	?>
 	</fieldset>
 <?php echo $this->Form->end(__('Submit')); ?>

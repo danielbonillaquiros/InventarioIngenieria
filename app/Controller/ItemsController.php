@@ -1,5 +1,5 @@
 <?php
-App::uses('AppController', 'Controller');
+App::uses('UndoController', 'Controller');
 /**
  * Items Controller
  *
@@ -7,7 +7,7 @@ App::uses('AppController', 'Controller');
  * @property PaginatorComponent $Paginator
  * @property SessionComponent $Session
  */
-class ItemsController extends AppController {
+class ItemsController extends UndoController {
 
 /**
  * Components
@@ -55,6 +55,7 @@ class ItemsController extends AppController {
       }
 			if ($this->Item->save($data)) {
 				$this->Session->setFlash(__('The item has been saved.'));
+        $this->createMemento('add', array('type' => 'item', 'id' => $data['item_id']));
 				return $this->redirect(array('action' => 'index'));
 			} else {
 				$this->Session->setFlash(__('The item could not be saved. Please, try again.'));

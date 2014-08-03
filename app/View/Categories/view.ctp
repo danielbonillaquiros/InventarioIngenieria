@@ -1,7 +1,7 @@
 <div class="categories view">
 <h2><?php echo __('Category'); ?></h2>
 	<dl>
-		<dt><?php echo __('Category Id'); ?></dt>
+		<dt><?php echo __('Category ID'); ?></dt>
 		<dd>
 			<?php echo h($category['Category']['category_id']); ?>
 			&nbsp;
@@ -16,18 +16,24 @@
 			<?php echo h($category['Category']['category_level']); ?>
 			&nbsp;
 		</dd>
+    <dt><?php echo __('Parent Category ID'); ?></dt>
+		<dd>
+			<?php echo h($category['Category']['category_parent_id']); ?>
+			&nbsp;
+		</dd>
 	</dl>
 </div>
 <div class="actions">
 	<h3><?php echo __('Actions'); ?></h3>
 	<ul>
-		<li><?php echo $this->Html->link(__('Edit Category'), array('action' => 'edit', $category['Category']['category_id'])); ?> </li>
-		<li><?php echo $this->Form->postLink(__('Delete Category'), array('action' => 'delete', $category['Category']['category_id']), array(), __('Are you sure you want to delete # %s?', $category['Category']['category_id'])); ?> </li>
+		<li><?php if ($category['Category']['category_id'] != -1 && $category['Category']['category_id'] != 0) echo $this->Html->link(__('Edit Category'), array('action' => 'edit', $category['Category']['category_id'])); ?> </li>
+		<li><?php if ($category['Category']['category_id'] != -1 && $category['Category']['category_id'] != 0) echo $this->Form->postLink(__('Delete Category'), array('action' => 'delete', $category['Category']['category_id']), array(), __('Are you sure you want to delete # %s?', $category['Category']['category_id'])); ?> </li>
 		<li><?php echo $this->Html->link(__('List Categories'), array('action' => 'index')); ?> </li>
 		<li><?php echo $this->Html->link(__('New Category'), array('action' => 'add')); ?> </li>
 		<li><?php echo $this->Html->link(__('List Items'), array('controller' => 'items', 'action' => 'index')); ?> </li>
 		<li><?php echo $this->Html->link(__('New Item'), array('controller' => 'items', 'action' => 'add')); ?> </li>
 		<li><?php echo $this->Html->link(__('List Units'), array('controller' => 'units', 'action' => 'index')); ?> </li>
+    <li><?php if($this->Session->check('Memento.counter')) echo $this->Form->postLink(__('Undo'), array('action' => 'setMemento'), array(), __('Are you sure you want to undo?')); ?> </li>
 	</ul>
 </div>
 <div class="related">
@@ -60,10 +66,4 @@
 	<?php endforeach; ?>
 	</table>
 <?php endif; ?>
-
-	<div class="actions">
-		<ul>
-			<li><?php echo $this->Html->link(__('New Item'), array('controller' => 'items', 'action' => 'add')); ?> </li>
-		</ul>
-	</div>
 </div>

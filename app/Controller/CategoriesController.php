@@ -1,5 +1,5 @@
 <?php
-App::uses('AppController', 'Controller');
+App::uses('UndoController', 'Controller');
 /**
  * Categories Controller
  *
@@ -7,7 +7,7 @@ App::uses('AppController', 'Controller');
  * @property PaginatorComponent $Paginator
  * @property SessionComponent $Session
  */
-class CategoriesController extends AppController {
+class CategoriesController extends UndoController {
 
 /**
  * Components
@@ -56,6 +56,8 @@ class CategoriesController extends AppController {
 				$this->Session->setFlash(__('The category could not be saved. Please, try again.'));
 			}
 		}
+    $categories = $this->Category->find('list');
+    $this->set(compact('categories'));
 	}
 
 /**
@@ -80,6 +82,8 @@ class CategoriesController extends AppController {
 			$options = array('conditions' => array('Category.' . $this->Category->primaryKey => $id));
 			$this->request->data = $this->Category->find('first', $options);
 		}
+    $categories = $this->Category->find('list');
+    $this->set(compact('categories'));
 	}
 
 /**
@@ -102,4 +106,42 @@ class CategoriesController extends AppController {
 		}
 		return $this->redirect(array('action' => 'index'));
 	}
+
+  public function setMemento() {
+    $counter = $this->Session->check('Memento.counter') ? $this->Session->read('Memento.counter') : 0;
+    $this->Session->write('Memento.counter', $counter > 0 ? $counter - 1 : 0);
+    $memento = 'Memento.' . $counter;
+    $action = $this->Session->read($memento . '.action');
+    $type = $this->Session->read($memento . '.type');
+
+    switch ($action) {
+      case 'add':
+        if($type == 'item') {
+          $this->Item->id = $this->Session->read($memento . '.id');
+          $this->request->allowMethod('post', 'delete');
+          if($this->Item->delete()) {
+            $this->Session->setFlash(__('The category has been deleted.'));
+          } else {
+            $this->Session->setFlash(__('The category could not be deleted. Please, try again.'));
+          }
+        } else {
+          $this->Category->id = $this->Session->read($memento . '.id');
+          $this->request->allowMethod('post', 'delete');
+          if($this->Category->delete()) {
+            $this->Session->setFlash(__('The category has been deleted.'));
+          } else {
+            $this->Session->setFlash(__('The category could not be deleted. Please, try again.'));
+          }
+        }
+        $this->Session->delete($memento);
+      break;
+      case 'edit':
+
+      break;
+      case 'delete':
+
+      break;
+    }
+    return $this->redirect(array('action' => 'index'));
+  }
 }

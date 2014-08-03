@@ -13,7 +13,7 @@
 		</dd>
 		<dt><?php echo __('Unit'); ?></dt>
 		<dd>
-			<?php echo $this->Html->link($item['Unit']['unit_name'], array('controller' => 'units', 'action' => 'view', $item['Unit']['unit_id'])); ?>
+			<?php echo h($item['Unit']['unit_name']); ?>
 			&nbsp;
 		</dd>
 		<dt><?php echo __('Item Price'); ?></dt>

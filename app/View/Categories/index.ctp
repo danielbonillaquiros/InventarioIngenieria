@@ -17,8 +17,8 @@
 		<td><?php echo h($category['Category']['category_level']); ?>&nbsp;</td>
 		<td class="actions">
 			<?php echo $this->Html->link(__('View'), array('action' => 'view', $category['Category']['category_id'])); ?>
-			<?php echo $this->Html->link(__('Edit'), array('action' => 'edit', $category['Category']['category_id'])); ?>
-			<?php echo $this->Form->postLink(__('Delete'), array('action' => 'delete', $category['Category']['category_id']), array(), __('Are you sure you want to delete # %s?', $category['Category']['category_id'])); ?>
+			<?php if ($category['Category']['category_id'] != -1 && $category['Category']['category_id'] != 0) echo $this->Html->link(__('Edit'), array('action' => 'edit', $category['Category']['category_id'])); ?>
+			<?php if ($category['Category']['category_id'] != -1 && $category['Category']['category_id'] != 0) echo $this->Form->postLink(__('Delete'), array('action' => 'delete', $category['Category']['category_id']), array(), __('Are you sure you want to delete # %s?', $category['Category']['category_id'])); ?>
 		</td>
 	</tr>
 <?php endforeach; ?>
