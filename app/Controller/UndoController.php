@@ -51,8 +51,8 @@ class UndoController extends AppController {
     print "$this->Session->read('Memento.counter')";
   }
 
-  /*public function setMemento() {
-    $counter = $this->Session->check('Memento.counter') ? $this->Session->read('Memento.counter') : 0;
+  public function setMemento() {
+    /*$counter = $this->Session->check('Memento.counter') ? $this->Session->read('Memento.counter') : 0;
     $this->Session->write('Memento.counter', $counter > 0 ? $counter - 1 : 0);
     $memento = 'Memento.' . $counter;
     $action = $this->Session->read($memento . '.action');
@@ -86,6 +86,6 @@ class UndoController extends AppController {
       case 'delete':
 
       break;
-    }
-  }*/
+    }*/
+  }
 }
