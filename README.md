@@ -7,6 +7,7 @@ Using CakePHP as the framework, we create an inventory.
 
 Some Handy Links
 ----------------
+Sólo gays en la cena de anoche.
 
 [CakePHP](http://www.cakephp.org) - The rapid development PHP framework
 
