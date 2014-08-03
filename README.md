@@ -18,4 +18,4 @@ Some Handy Links
 
 Created by:
 - Jose Tomás Gómez Rojas
-- MamaTroncas
+- Daniel Bonilla Quirós 
