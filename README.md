@@ -17,5 +17,5 @@ Some Handy Links
 =======
 
 Created by:
-- Jose Tomas Gomez Rojas
+- Jose Tomás Gómez Rojas
 - Daniel Bonilla Quirós
