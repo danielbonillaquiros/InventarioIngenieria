@@ -47,6 +47,9 @@ class UndoController extends AppController {
     print "$this->Session->read('Memento.counter')";
   }
 
+  /**
+   *  Returns to the last state of the database and changes the view to actual index.
+   */
   public function setMemento() {
     $counter = $this->Session->check('Memento.counter') ? $this->Session->read('Memento.counter') : 0;
     $this->Session->write('Memento.counter', $counter > 0 ? $counter - 1 : 0);
@@ -56,6 +59,7 @@ class UndoController extends AppController {
 
     switch ($action) {
       case 'add':
+      // this will reverse the last add action
         if($type == 'item') {
           $this->request->allowMethod('post', 'delete');
           if($this->Item->delete($this->Session->read($memento . '.id'))) {
@@ -78,26 +82,22 @@ class UndoController extends AppController {
 
       break;
       case 'delete':
+        $this->Item->create();
+        $data = array('id' => $this->Session->read($memento . 'id'),
+                      'item_description' => $this->Session->read($memento . 'item_description'),
+                      'item_unit_id' => $this->Session->read($memento . 'item_unit_id'),
+                      'item_price' => $this->Session->read($memento . 'item_price'),
+                      'item_picture' => $this->Session->read($memento . 'item_picture'),
+                      'item_category_id' => $this->Session->read($memento . 'item_category_id'));
 
-      /////////////////////////////////////////////////////////////////////////////////////////
-        /*if ($this->request->is('post')) {
-          $this->Item->create();
-          $data = $this->request->data['Item'];
-          if (!$data['item_picture']['name']) {
-            unset($data['item_picture']);
-          }
-          if ($this->Item->save($data)) {
-            $this->Session->setFlash(__('The item has been saved.'));
-            $this->createMemento('add', array('type' => 'item', 'id' => $this->Item->id));
-            return $this->redirect(array('action' => 'index'));
-          } else {
-            $this->Session->setFlash(__('The item could not be saved. Please, try again.'));
-          }
+        if ($this->Item->save($data)) {
+          $this->Session->setFlash(__('The item has been saved.'));
+        } else {
+          $this->Session->setFlash(__('The item could not be saved. Please, try again.'));
         }
         $units = $this->Item->Unit->find('list');
         $categories = $this->Item->Category->find('list');
-        $this->set(compact('units', 'categories'));*/
-      /////////////////////////////////////////////////////////////////////////////////////////
+        $this->set(compact('units', 'categories'));
       break;
     }
 

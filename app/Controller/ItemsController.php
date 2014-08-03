@@ -108,11 +108,11 @@ class ItemsController extends UndoController {
 		$this->Item->id = $id;
     $data = array('type' => 'item',
                   'id' => $this->Item->id,
-                  'item_description' => $this->Item->item_description,
-                  'item_unit_id' => $this->Item->item_unit_id,
-                  'item_price' => $this->Item->item_price,
-                  'item_picture' => $this->Item->item_picture,
-                  'item_category_id' => $this->Item->item_category_id);
+                  'item_description' => "cosa",//$this->Item->item_description,
+                  'item_unit_id' => 1,//$this->Item->item_unit_id,
+                  'item_price' => 200,//$this->Item->item_price,
+                  'item_picture' => null,//$this->Item->item_picture,
+                  'item_category_id' => 1);//$this->Item->item_category_id);
 		if (!$this->Item->exists()) {
 			throw new NotFoundException(__('Invalid item'));
 		}
