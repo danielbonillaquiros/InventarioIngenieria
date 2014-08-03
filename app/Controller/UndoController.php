@@ -5,46 +5,14 @@ App::uses('AppController', 'Controller');
 class UndoController extends AppController {
 
 
-  public function createMemento($action, $data) {
+  public function createMemento($action, $type, $data) {
     $counter = $this->Session->check('Memento.counter') ? $this->Session->read('Memento.counter') + 1 : 1;
     $this->Session->write('Memento.counter', $counter);
     $memento = 'Memento.' . $counter;
     $this->Session->write($memento . '.action', $action);
     $this->Session->write($memento . '.id', $data['id']);
-    switch($action) {
-      case 'add':
-        $this->Session->write($memento . '.type', $data['type']);
-      break;
-      case 'edit':
-        $this->Session->write($memento . '.type', $data['type']);
-        if($data['type'] == 'item') {
-          $this->Session->write($memento . '.item_description', $data['item_description']);
-          $this->Session->write($memento . '.item_unit_id', $data['item_unit_id']);
-          $this->Session->write($memento . '.item_price', $data['item_price']);
-          $this->Session->write($memento . '.item_picture', $data['item_picture']);
-          $this->Session->write($memento . '.item_category_id', $data['item_category_id']);
-        } else {
-          $this->Session->write($memento . '.category_description', $data['category_description']);
-          $this->Session->write($memento . '.category_level', $data['category_level']);
-          $this->Session->write($memento . '.category_parent', $data['category_parent']);
-        }
-      break;
-      case 'delete':
-        $this->Session->write($memento . '.type', $data['type']);
-        if($data['type'] == 'item') {
-          $this->Session->write($memento . '.item_description', $data['item_description']);
-          $this->Session->write($memento . '.item_unit_id', $data['item_unit_id']);
-          $this->Session->write($memento . '.item_price', $data['item_price']);
-          $this->Session->write($memento . '.item_picture', $data['item_picture']);
-          $this->Session->write($memento . '.item_category_id', $data['item_category_id']);
-        } else {
-          $this->Session->write($memento . '.category_description', $data['category_description']);
-          $this->Session->write($memento . '.category_level', $data['category_level']);
-          $this->Session->write($memento . '.category_parent', $data['category_parent']);
-        }
-      break;
-    }
-    print "$this->Session->read('Memento.counter')";
+    $this->Session->write($memento . '.type', $type);
+    $this->Session->write($memento . '.data', $data);
   }
 
   /**
@@ -83,12 +51,7 @@ class UndoController extends AppController {
       break;
       case 'delete':
         $this->Item->create();
-        $data = array('id' => $this->Session->read($memento . 'id'),
-                      'item_description' => $this->Session->read($memento . 'item_description'),
-                      'item_unit_id' => $this->Session->read($memento . 'item_unit_id'),
-                      'item_price' => $this->Session->read($memento . 'item_price'),
-                      'item_picture' => $this->Session->read($memento . 'item_picture'),
-                      'item_category_id' => $this->Session->read($memento . 'item_category_id'));
+        $data = $this->Session->read($memento . '.data');
 
         if ($this->Item->save($data)) {
           $this->Session->setFlash(__('The item has been saved.'));
