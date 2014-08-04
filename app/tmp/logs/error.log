@@ -982,3 +982,14 @@ Stack Trace:
 #3 C:\xampp\htdocs\Inventario\lib\Cake\Core\App.php(904): App::_checkFatalError()
 #4 [internal function]: App::shutdown()
 #5 {main}
+2014-08-04 01:51:29 Error: [MissingActionException] Action CategoriesController::view() could not be found.
+Exception Attributes: array (
+  'controller' => 'CategoriesController',
+  'action' => 'view',
+)
+Request URL: /inventario/categories/view/0
+Stack Trace:
+#0 C:\xampp\htdocs\inventario\lib\Cake\Routing\Dispatcher.php(191): Controller->invokeAction(Object(CakeRequest))
+#1 C:\xampp\htdocs\inventario\lib\Cake\Routing\Dispatcher.php(165): Dispatcher->_invoke(Object(CategoriesController), Object(CakeRequest))
+#2 C:\xampp\htdocs\inventario\app\webroot\index.php(108): Dispatcher->dispatch(Object(CakeRequest), Object(CakeResponse))
+#3 {main}

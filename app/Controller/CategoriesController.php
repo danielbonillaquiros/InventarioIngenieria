@@ -34,7 +34,7 @@ class CategoriesController extends UndoController {
  * @param string $id
  * @return void
  */
-	public function advanceView($id = null) {
+	public function view($id = null) {
 		if (!$this->Category->exists($id)) {
 			throw new NotFoundException(__('Invalid category'));
 		}
