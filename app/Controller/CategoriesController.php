@@ -125,6 +125,17 @@ class CategoriesController extends UndoController {
 		if ($this->Category->delete()) {
 			$this->Session->setFlash(__('The category has been deleted.'));
       $this->createMemento('delete', 'category', $data);
+
+      // set items category with this category to Not categorized
+      /*$items = $this->find('all', array('conditions' => array('Item.item_category_id' => $id)));
+      if(count($items) > 0) {
+        foreach($items as $item) {
+          $this->Item->query("UPDATE inventario.items SET " .
+                       "item_category_id = '-1' " .
+                       "WHERE items.item_id = '" . $item['item_id'] . "';");
+        }
+      }*/
+
 		} else {
 			$this->Session->setFlash(__('The category could not be deleted. Please, try again.'));
 		}
