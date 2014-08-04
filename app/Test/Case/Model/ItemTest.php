@@ -14,8 +14,7 @@ class ItemTest extends CakeTestCase {
  */
 	public $fixtures = array(
 		'app.item',
-		'app.item_unit',
-		'app.item_category'
+		'app.category'
 	);
 
 /**
@@ -26,6 +25,10 @@ class ItemTest extends CakeTestCase {
 	public function setUp() {
 		parent::setUp();
 		$this->Item = ClassRegistry::init('Item');
+	}
+	
+		public function testMyFunction( ){
+		$this->loadFixtures('Category', 'Item');
 	}
 
 /**
