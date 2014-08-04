@@ -1,5 +1,5 @@
 <div class="items view">
-<h2><?php echo __('Item - Basic View'); ?></h2>
+<h2><?php echo __('Item - Basic'); ?></h2>
 	<dl>
 		<dt><?php echo __('Item Id'); ?></dt>
 		<dd>
@@ -37,7 +37,7 @@
 	<h3><?php echo __('Actions'); ?></h3>
 	<ul>
 		<li><?php echo $this->Html->link(__('List Items'), array('action' => 'index', "basic")); ?> </li>
-		<li><?php echo $this->Html->link(__('List Categories'), array('controller' => 'categories', 'action' => 'index')); ?> </li>
+		<li><?php echo $this->Html->link(__('List Categories'), array('controller' => 'categories', 'action' => 'index', "basic")); ?> </li>
 	</ul>
 	<h3><?php echo __('Profiles'); ?></h3>
 	<ul>

@@ -1,5 +1,5 @@
 <div class="items index">
-	<h2><?php echo __('Items - Editor View'); ?></h2>
+	<h2><?php echo __('Items - Editor'); ?></h2>
   <table cellpadding="0" cellspacing="0">
             <?php echo $this->Html->tableHeaders(array(
                 $this->Paginator->sort('item_id'),
@@ -53,7 +53,7 @@
 <div class="actions">
 	<h3><?php echo __('Actions'); ?></h3>
 	<ul>
-		<li><?php echo $this->Html->link(__('List Categories'), array('controller' => 'categories', 'action' => 'index')); ?> </li>
+		<li><?php echo $this->Html->link(__('List Categories'), array('controller' => 'categories', 'action' => 'index', "editor")); ?> </li>
 	</ul>
 	<h3><?php echo __('Profiles'); ?></h3>
 	<ul>

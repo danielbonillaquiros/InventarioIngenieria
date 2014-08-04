@@ -1,5 +1,5 @@
 <div class="categories view">
-<h2><?php echo __('Category - Advanced'); ?></h2>
+<h2><?php echo __('Category - Editor'); ?></h2>
 	<dl>
 		<dt><?php echo __('Category ID'); ?></dt>
 		<dd>
@@ -27,17 +27,13 @@
 	<h3><?php echo __('Actions'); ?></h3>
 	<ul>
 		<li><?php if ($category['Category']['category_id'] != -1 && $category['Category']['category_id'] != 0) echo $this->Html->link(__('Edit Category'), array('action' => 'edit', $category['Category']['category_id'])); ?> </li>
-		<li><?php if ($category['Category']['category_id'] != -1 && $category['Category']['category_id'] != 0) echo $this->Form->postLink(__('Delete Category'), array('action' => 'delete', $category['Category']['category_id']), array(), __('Are you sure you want to delete # %s?', $category['Category']['category_id'])); ?> </li>
-		<li><?php echo $this->Html->link(__('List Categories'), array('action' => 'index')); ?> </li>
-		<li><?php echo $this->Html->link(__('New Category'), array('action' => 'add')); ?> </li>
-		<li><?php echo $this->Html->link(__('List Items'), array('controller' => 'items', 'action' => 'index')); ?> </li>
-		<li><?php echo $this->Html->link(__('New Item'), array('controller' => 'items', 'action' => 'add')); ?> </li>
-    <li><?php if($this->Session->check('Memento.counter')) echo $this->Form->postLink(__('Undo'), array('action' => 'setMemento'), array(), __('Are you sure you want to undo?')); ?> </li>
-	</ul>
+		<li><?php echo $this->Html->link(__('List Categories'), array('action' => 'index', "editor")); ?> </li>
+		<li><?php echo $this->Html->link(__('List Items'), array('controller' => 'items', 'action' => 'index', "editor")); ?> </li>
+  </ul>
   <h3><?php echo __('Profiles'); ?></h3>
   <ul>
     <li><?php echo $this->Html->link(__('Basic View'), array('controller' => 'categories', 'action' => 'view', $category['Category']['category_id'], "basic")); ?> </li>
-    <li><?php echo $this->Html->link(__('Editor View'), array('controller' => 'categories', 'action' => 'view', $category['Category']['category_id'], "editor")); ?> </li>
+    <li><?php echo $this->Html->link(__('Advanced View'), array('controller' => 'categories', 'action' => 'view', $category['Category']['category_id'])); ?> </li>
 	</ul>
 </div>
 <div class="related">
@@ -62,9 +58,8 @@
 			<td><?php echo $categoryItems['item_picture']; ?></td>
 			<td><?php echo $categoryItems['item_category_id']; ?></td>
 			<td class="actions">
-				<?php echo $this->Html->link(__('View'), array('controller' => 'items', 'action' => 'view', $categoryItems['item_id'])); ?>
+				<?php echo $this->Html->link(__('View'), array('controller' => 'items', 'action' => 'view', $categoryItems['item_id'], "editor")); ?>
 				<?php echo $this->Html->link(__('Edit'), array('controller' => 'items', 'action' => 'edit', $categoryItems['item_id'])); ?>
-				<?php echo $this->Form->postLink(__('Delete'), array('controller' => 'items', 'action' => 'delete', $categoryItems['item_id']), array(), __('Are you sure you want to delete # %s?', $categoryItems['item_id'])); ?>
 			</td>
 		</tr>
 	<?php endforeach; ?>

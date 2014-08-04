@@ -1,5 +1,5 @@
 <div class="items index">
-	<h2><?php echo __('Items - Advanced View'); ?></h2>
+	<h2><?php echo __('Items - Advanced'); ?></h2>
   <table cellpadding="0" cellspacing="0">
             <?php echo $this->Html->tableHeaders(array(
                 $this->Paginator->sort('item_id'),

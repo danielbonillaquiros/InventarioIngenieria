@@ -1,5 +1,5 @@
 <div class="categories index">
-	<h2><?php echo __('Categories - Advanced'); ?></h2>
+	<h2><?php echo __('Categories - Basic'); ?></h2>
 	<table cellpadding="0" cellspacing="0">
 	<thead>
 	<tr>
@@ -16,9 +16,7 @@
 		<td><?php echo h($category['Category']['category_description']); ?>&nbsp;</td>
 		<td><?php echo h($category['Category']['category_level']); ?>&nbsp;</td>
 		<td class="actions">
-			<?php echo $this->Html->link(__('View'), array('action' => 'view', $category['Category']['category_id'])); ?>
-			<?php if ($category['Category']['category_id'] != -1 && $category['Category']['category_id'] != 0) echo $this->Html->link(__('Edit'), array('action' => 'edit', $category['Category']['category_id'])); ?>
-			<?php if ($category['Category']['category_id'] != -1 && $category['Category']['category_id'] != 0) echo $this->Form->postLink(__('Delete'), array('action' => 'delete', $category['Category']['category_id']), array(), __('Are you sure you want to delete # %s?', $category['Category']['category_id'])); ?>
+			<?php echo $this->Html->link(__('View'), array('action' => 'view', $category['Category']['category_id'], "basic")); ?>
 		</td>
 	</tr>
 <?php endforeach; ?>
@@ -41,14 +39,11 @@
 <div class="actions">
 	<h3><?php echo __('Actions'); ?></h3>
 	<ul>
-		<li><?php echo $this->Html->link(__('New Category'), array('action' => 'add')); ?></li>
-		<li><?php echo $this->Html->link(__('List Items'), array('controller' => 'items', 'action' => 'index')); ?> </li>
-		<li><?php echo $this->Html->link(__('New Item'), array('controller' => 'items', 'action' => 'add')); ?> </li>
-		<li><?php if($this->Session->check('Memento.counter')) echo $this->Form->postLink(__('Undo'), array('action' => 'setMemento'), array(), __('Are you sure you want to undo?')); ?> </li>
+		<li><?php echo $this->Html->link(__('List Items'), array('controller' => 'items', 'action' => 'index', "basic")); ?> </li>
 	</ul>
   <h3><?php echo __('Profiles'); ?></h3>
-  <ul>
-    <li><?php echo $this->Html->link(__('Basic View'), array('controller' => 'categories', 'action' => 'index', "basic")); ?> </li>
+	<ul>
     <li><?php echo $this->Html->link(__('Editor View'), array('controller' => 'categories', 'action' => 'index', "editor")); ?> </li>
+    <li><?php echo $this->Html->link(__('Advanced View'), array('controller' => 'categories', 'action' => 'index')); ?> </li>
 	</ul>
 </div>

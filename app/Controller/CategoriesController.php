@@ -21,10 +21,18 @@ class CategoriesController extends UndoController {
  *
  * @return void
  */
-
-	public function index() {
+	public function index($profile = null) {
 		$this->Category->recursive = 0;
 		$this->set('categories', $this->Paginator->paginate());
+
+    switch ($profile) {
+      case "basic":
+        $this->render("basicindex");
+      break;
+      case "editor":
+        $this->render("editorindex");
+      break;
+    }
 	}
 
 /**
@@ -34,12 +42,21 @@ class CategoriesController extends UndoController {
  * @param string $id
  * @return void
  */
-	public function view($id = null) {
+	public function view($id = null, $profile = null) {
 		if (!$this->Category->exists($id)) {
 			throw new NotFoundException(__('Invalid category'));
 		}
 		$options = array('conditions' => array('Category.' . $this->Category->primaryKey => $id));
 		$this->set('category', $this->Category->find('first', $options));
+
+    switch ($profile) {
+      case "basic":
+        $this->render("basicview");
+      break;
+      case "editor":
+        $this->render("editorview");
+      break;
+    }
 	}
 
 /**

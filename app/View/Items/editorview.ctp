@@ -1,5 +1,5 @@
 <div class="items view">
-<h2><?php echo __('Item - Editor View'); ?></h2>
+<h2><?php echo __('Item - Editor'); ?></h2>
 	<dl>
 		<dt><?php echo __('Item Id'); ?></dt>
 		<dd>
@@ -38,7 +38,7 @@
 	<ul>
 		<li><?php echo $this->Html->link(__('Edit Item'), array('action' => 'edit', $item['Item']['item_id'])); ?> </li>
 		<li><?php echo $this->Html->link(__('List Items'), array('action' => 'index', "editor")); ?> </li>
-		<li><?php echo $this->Html->link(__('List Categories'), array('controller' => 'categories', 'action' => 'index')); ?> </li>
+		<li><?php echo $this->Html->link(__('List Categories'), array('controller' => 'categories', 'action' => 'index', "editor")); ?> </li>
 	</ul>
 	<h3><?php echo __('Profiles'); ?></h3>
 	<ul>

@@ -1,5 +1,5 @@
 <div class="items view">
-<h2><?php echo __('Item - Advanced View'); ?></h2>
+<h2><?php echo __('Item - Advanced'); ?></h2>
 	<dl>
 		<dt><?php echo __('Item Id'); ?></dt>
 		<dd>
