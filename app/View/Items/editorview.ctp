@@ -49,6 +49,6 @@
 	<h3><?php echo __('Actions'); ?></h3>
 	<ul>
 		<li><?php echo $this->Html->link(__('Basic View'), array('action' => 'view', $item['Item']['item_id'], "basic")); ?> </li>
-		<li><?php echo $this->Html->link(__('Editor View'), array('action' => 'view', $item['Item']['item_id'], "editor")); ?> </li>
+		<li><?php echo $this->Html->link(__('Advanced View'), array('action' => 'view', $item['Item']['item_id'])); ?> </li>
 	</ul>
 </div>

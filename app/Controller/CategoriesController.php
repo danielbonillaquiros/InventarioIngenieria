@@ -70,12 +70,14 @@ class CategoriesController extends UndoController {
  * @return void
  */
 	public function edit($id = null) {
+    $data = $this->Category->find('first', array('conditions' => array('Category.category_id' => $id)));
 		if (!$this->Category->exists($id)) {
 			throw new NotFoundException(__('Invalid category'));
 		}
 		if ($this->request->is(array('post', 'put'))) {
 			if ($this->Category->save($this->request->data)) {
 				$this->Session->setFlash(__('The category has been saved.'));
+        $this->createMemento('edit', 'category', $data);
 				return $this->redirect(array('action' => 'index'));
 			} else {
 				$this->Session->setFlash(__('The category could not be saved. Please, try again.'));
@@ -97,12 +99,15 @@ class CategoriesController extends UndoController {
  */
 	public function delete($id = null) {
 		$this->Category->id = $id;
+    $data = $this->Category->find('first', array('conditions' => array('Category.category_id' => $id)));
+    $data['id'] = $data['Category']['category_id'];
 		if (!$this->Category->exists()) {
 			throw new NotFoundException(__('Invalid category'));
 		}
 		$this->request->allowMethod('post', 'delete');
 		if ($this->Category->delete()) {
 			$this->Session->setFlash(__('The category has been deleted.'));
+      $this->createMemento('delete', 'category', $data);
 		} else {
 			$this->Session->setFlash(__('The category could not be deleted. Please, try again.'));
 		}

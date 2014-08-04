@@ -1,5 +1,5 @@
 <div class="items index">
-	<h2><?php echo __('Items - Advanced View'); ?></h2>
+	<h2><?php echo __('Items - Basic View'); ?></h2>
   <table cellpadding="0" cellspacing="0">
             <?php echo $this->Html->tableHeaders(array(
                 $this->Paginator->sort('item_id'),
@@ -24,8 +24,6 @@
                 // Actions.
                 $actions = array();
                 $actions[] = $this->Html->link(__('View'), array('action' => 'view', $item['Item']['item_id']));
-                $actions[] = $this->Html->link(__('Edit'), array('action' => 'edit', $item['Item']['item_id']));
-                $actions[] = $this->Form->postLink(__('Delete'), array('action' => 'delete', $item['Item']['item_id']), null, __('Are you sure you want to delete # %s?', $item['Item']['item_id']));
                 $row[] = array(
                     implode(' ', $actions),
                     array('class' => 'actions'),
@@ -54,16 +52,13 @@
 <div class="actions">
 	<h3><?php echo __('Actions'); ?></h3>
 	<ul>
-		<li><?php echo $this->Html->link(__('New Item'), array('action' => 'add')); ?></li>
 		<li><?php echo $this->Html->link(__('List Categories'), array('controller' => 'categories', 'action' => 'index')); ?> </li>
-		<li><?php echo $this->Html->link(__('New Category'), array('controller' => 'categories', 'action' => 'add')); ?> </li>
-    <li><?php if($this->Session->check('Memento.counter')) echo $this->Form->postLink(__('Undo'), array('action' => 'setMemento'), array(), __('Are you sure you want to undo?')); ?> </li>
 	</ul>
 </div>
 <div class="actions">
 	<h3><?php echo __('Profiles'); ?></h3>
 	<ul>
-    <li><?php echo $this->Html->link(__('Basic View'), array('controller' => 'items', 'action' => 'index', "basic")); ?> </li>
     <li><?php echo $this->Html->link(__('Editor View'), array('controller' => 'items', 'action' => 'index', "editor")); ?> </li>
+    <li><?php echo $this->Html->link(__('Advanced View'), array('controller' => 'items', 'action' => 'index')); ?> </li>
 	</ul>
 </div>
