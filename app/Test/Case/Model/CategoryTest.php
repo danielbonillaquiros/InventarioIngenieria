@@ -13,7 +13,7 @@ class CategoryTest extends CakeTestCase {
  * @var array
  */
 	public $fixtures = array(
-		'app.category'
+		'app.category', 'app.item'
 	);
 
 /**
@@ -24,6 +24,10 @@ class CategoryTest extends CakeTestCase {
 	public function setUp() {
 		parent::setUp();
 		$this->Category = ClassRegistry::init('Category');
+	}
+	
+	public function testMyFunction( ){
+		$this->loadFixtures('Category', 'Item');
 	}
 
 /**

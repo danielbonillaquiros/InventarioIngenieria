@@ -24,7 +24,8 @@ class ItemsControllerTest extends ControllerTestCase {
  * @return void
  */
 	public function testIndex() {
-		$this->markTestIncomplete('testIndex not implemented.');
+		$result = $this->testAction('/items/index');
+        debug($result);
 	}
 
 /**
@@ -33,7 +34,8 @@ class ItemsControllerTest extends ControllerTestCase {
  * @return void
  */
 	public function testView() {
-		$this->markTestIncomplete('testView not implemented.');
+		$result = $this->testAction('items/index/view');
+        debug($result);
 	}
 
 /**
@@ -42,7 +44,8 @@ class ItemsControllerTest extends ControllerTestCase {
  * @return void
  */
 	public function testAdd() {
-		$this->markTestIncomplete('testAdd not implemented.');
+		$result = $this->testAction('items/index/add');
+        debug($result);
 	}
 
 /**
@@ -51,7 +54,8 @@ class ItemsControllerTest extends ControllerTestCase {
  * @return void
  */
 	public function testEdit() {
-		$this->markTestIncomplete('testEdit not implemented.');
+		$result = $this->testAction('items/index/edit');
+        debug($result);
 	}
 
 /**
@@ -60,7 +64,8 @@ class ItemsControllerTest extends ControllerTestCase {
  * @return void
  */
 	public function testDelete() {
-		$this->markTestIncomplete('testDelete not implemented.');
+		$result = $this->testAction('items/index/delete');
+        debug($result);
 	}
 
 }
