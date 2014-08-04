@@ -106,7 +106,8 @@ class ItemsController extends UndoController {
  */
 	public function delete($id = null) {
 		$this->Item->id = $id;
-    $data = array();
+    $data = $this->Item->find('first', array('conditions' => array('Item.item_id' => $id)));
+    $data['id'] = $data['Item']['item_id'];
 		if (!$this->Item->exists()) {
 			throw new NotFoundException(__('Invalid item'));
 		}

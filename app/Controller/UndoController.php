@@ -24,6 +24,7 @@ class UndoController extends AppController {
     $memento = 'Memento.' . $counter;
     $action = $this->Session->read($memento . '.action');
     $type = $this->Session->read($memento . '.type');
+    $data = $this->Session->read($memento . '.data');
 
     switch ($action) {
       case 'add':
@@ -44,28 +45,31 @@ class UndoController extends AppController {
             $this->Session->setFlash(__('The action could not be reversed and category could not be deleted. Please, try again.'));
           }
         }
-        $this->Session->delete($memento);
       break;
       case 'edit':
 
       break;
       case 'delete':
-        $this->Item->create();
-        $data = $this->Session->read($memento . '.data');
-
-        if ($this->Item->save($data)) {
-          $this->Session->setFlash(__('The item has been saved.'));
+        if($type == 'item') {
+          $this->Item->query("INSERT INTO inventario.items (item_id, item_description, item_unit_id, item_price, item_picture, item_category_id) VALUES ('" .
+                       $data['Item']['item_id'] . "', '" .
+                       $data['Item']['item_description'] . "', '" .
+                       $data['Item']['item_unit_id'] . "', '" .
+                       $data['Item']['item_price'] . "', '" .
+                       $data['Item']['item_picture'] . "', '" .
+                       $data['Item']['item_category_id'] . "');");
         } else {
-          $this->Session->setFlash(__('The item could not be saved. Please, try again.'));
+          $this->Category->query("INSERT INTO `inventario`.`categories` (`category_id`, `category_description`, `category_level`, `category_parent_id`) VALUES ('" .
+                       $data['category_id'] . "', '" .
+                       $data['category_description'] . "', '" .
+                       $data['category_level'] . "', '" .
+                       $data['category_parent_id'] . "');");
         }
-        $units = $this->Item->Unit->find('list');
-        $categories = $this->Item->Category->find('list');
-        $this->set(compact('units', 'categories'));
       break;
     }
 
     if($this->Session->read('Memento.counter') == 0) $this->Session->delete('Memento.counter');
-
+    $this->Session->delete($memento);
     return $this->redirect(array('action' => 'index'));
   }
 }
