@@ -74,6 +74,7 @@ class ItemsController extends UndoController {
  * @return void
  */
 	public function edit($id = null) {
+    $data = $this->Item->find('first', array('conditions' => array('Item.item_id' => $id)));
 		if (!$this->Item->exists($id)) {
 			throw new NotFoundException(__('Invalid item'));
 		}
@@ -84,6 +85,7 @@ class ItemsController extends UndoController {
       }
 			if ($this->Item->save($data)) {
 				$this->Session->setFlash(__('The item has been saved.'));
+        $this->createMemento('edit', 'item', $data);
 				return $this->redirect(array('action' => 'index'));
 			} else {
 				$this->Session->setFlash(__('The item could not be saved. Please, try again.'));
