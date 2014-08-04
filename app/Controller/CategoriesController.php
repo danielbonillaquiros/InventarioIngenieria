@@ -65,6 +65,7 @@ class CategoriesController extends UndoController {
  * @return void
  */
 	public function add() {
+    ////////////esto debe pasarse a otra clase, pasando por parametro el modelo
 		if ($this->request->is('post')) {
 			$this->Category->create();
 			if ($this->Category->save($this->request->data)) {
