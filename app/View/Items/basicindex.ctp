@@ -23,7 +23,7 @@
                 $row[] = $this->Html->link($item['Category']['category_description'], array('controller' => 'categories', 'action' => 'view', $item['Category']['category_id']));
                 // Actions.
                 $actions = array();
-                $actions[] = $this->Html->link(__('View'), array('action' => 'view', $item['Item']['item_id']));
+                $actions[] = $this->Html->link(__('View'), array('action' => 'view', $item['Item']['item_id'], "basic"));
                 $row[] = array(
                     implode(' ', $actions),
                     array('class' => 'actions'),
@@ -54,8 +54,6 @@
 	<ul>
 		<li><?php echo $this->Html->link(__('List Categories'), array('controller' => 'categories', 'action' => 'index')); ?> </li>
 	</ul>
-</div>
-<div class="actions">
 	<h3><?php echo __('Profiles'); ?></h3>
 	<ul>
     <li><?php echo $this->Html->link(__('Editor View'), array('controller' => 'items', 'action' => 'index', "editor")); ?> </li>

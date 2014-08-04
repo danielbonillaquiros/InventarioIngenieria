@@ -1,5 +1,5 @@
 <div class="items view">
-<h2><?php echo __('Item'); ?></h2>
+<h2><?php echo __('Item - Editor View'); ?></h2>
 	<dl>
 		<dt><?php echo __('Item Id'); ?></dt>
 		<dd>
@@ -37,16 +37,10 @@
 	<h3><?php echo __('Actions'); ?></h3>
 	<ul>
 		<li><?php echo $this->Html->link(__('Edit Item'), array('action' => 'edit', $item['Item']['item_id'])); ?> </li>
-		<li><?php echo $this->Form->postLink(__('Delete Item'), array('action' => 'delete', $item['Item']['item_id']), array(), __('Are you sure you want to delete # %s?', $item['Item']['item_id'])); ?> </li>
-		<li><?php echo $this->Html->link(__('List Items'), array('action' => 'index')); ?> </li>
-		<li><?php echo $this->Html->link(__('New Item'), array('action' => 'add')); ?> </li>
+		<li><?php echo $this->Html->link(__('List Items'), array('action' => 'index', "editor")); ?> </li>
 		<li><?php echo $this->Html->link(__('List Categories'), array('controller' => 'categories', 'action' => 'index')); ?> </li>
-		<li><?php echo $this->Html->link(__('New Category'), array('controller' => 'categories', 'action' => 'add')); ?> </li>
-    <li><?php if($this->Session->check('Memento.counter')) echo $this->Form->postLink(__('Undo'), array('action' => 'setMemento'), array(), __('Are you sure you want to undo?')); ?> </li>
 	</ul>
-</div>
-<div class="actions">
-	<h3><?php echo __('Actions'); ?></h3>
+	<h3><?php echo __('Profiles'); ?></h3>
 	<ul>
 		<li><?php echo $this->Html->link(__('Basic View'), array('action' => 'view', $item['Item']['item_id'], "basic")); ?> </li>
 		<li><?php echo $this->Html->link(__('Advanced View'), array('action' => 'view', $item['Item']['item_id'])); ?> </li>

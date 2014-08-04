@@ -59,8 +59,6 @@
 		<li><?php echo $this->Html->link(__('New Category'), array('controller' => 'categories', 'action' => 'add')); ?> </li>
     <li><?php if($this->Session->check('Memento.counter')) echo $this->Form->postLink(__('Undo'), array('action' => 'setMemento'), array(), __('Are you sure you want to undo?')); ?> </li>
 	</ul>
-</div>
-<div class="actions">
 	<h3><?php echo __('Profiles'); ?></h3>
 	<ul>
     <li><?php echo $this->Html->link(__('Basic View'), array('controller' => 'items', 'action' => 'index', "basic")); ?> </li>

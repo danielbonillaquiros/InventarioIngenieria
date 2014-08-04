@@ -1,5 +1,5 @@
 <div class="items view">
-<h2><?php echo __('Item'); ?></h2>
+<h2><?php echo __('Item - Advanced View'); ?></h2>
 	<dl>
 		<dt><?php echo __('Item Id'); ?></dt>
 		<dd>
@@ -44,9 +44,7 @@
 		<li><?php echo $this->Html->link(__('New Category'), array('controller' => 'categories', 'action' => 'add')); ?> </li>
     <li><?php if($this->Session->check('Memento.counter')) echo $this->Form->postLink(__('Undo'), array('action' => 'setMemento'), array(), __('Are you sure you want to undo?')); ?> </li>
 	</ul>
-</div>
-<div class="actions">
-	<h3><?php echo __('Actions'); ?></h3>
+	<h3><?php echo __('Profiles'); ?></h3>
 	<ul>
 		<li><?php echo $this->Html->link(__('Basic View'), array('action' => 'view', $item['Item']['item_id'], "basic")); ?> </li>
 		<li><?php echo $this->Html->link(__('Editor View'), array('action' => 'view', $item['Item']['item_id'], "editor")); ?> </li>
