@@ -51,19 +51,19 @@ class UndoController extends AppController {
       case 'edit':
         if($type == 'item') {
           $this->Item->query("UPDATE inventario.items SET " .
-                       "item_description = '" . $data['item_description'] . "', " .
-                       "item_unit_id = '" . $data['item_unit_id'] . "', " .
-                       "item_price = '" . $data['item_price'] . "', " .
-                       "item_picture = '" . $data['item_picture'] . "', " .
-                       "item_category_id = '" . $data['item_category_id'] . "' " .
-                       "WHERE items.item_id = '" . $data['item_id'] . "';");
+                       "item_description = '" . $data['Item']['item_description'] . "', " .
+                       "item_unit_id = '" . $data['Item']['item_unit_id'] . "', " .
+                       "item_price = '" . $data['Item']['item_price'] . "', " .
+                       "item_picture = '" . $data['Item']['item_picture'] . "', " .
+                       "item_category_id = '" . $data['Item']['item_category_id'] . "' " .
+                       "WHERE items.item_id = '" . $data['Item']['item_id'] . "';");
           $this->Session->setFlash(__('Action has been reversed and the item has been updated.'));
         } else {
           $this->Category->query("UPDATE inventario.categories SET " .
-                       "category_description = '" . $data['category_description'] . "', " .
-                       "category_level = '" . $data['category_level'] . "', " .
-                       "category_parent_id = '" . $data['category_parent_id'] . "' " .
-                       "WHERE categories.category_id = '" . $data['category_id'] . "';");
+                       "category_description = '" . $data['Category']['category_description'] . "', " .
+                       "category_level = '" . $data['Category']['category_level'] . "', " .
+                       "category_parent_id = '" . $data['Category']['category_parent_id'] . "' " .
+                       "WHERE categories.category_id = '" . $data['Category']['category_id'] . "';");
           $this->Session->setFlash(__('Action has been reversed and the category has been updated.'));
         }
       break;
@@ -76,12 +76,14 @@ class UndoController extends AppController {
                        $data['Item']['item_price'] . "', '" .
                        $data['Item']['item_picture'] . "', '" .
                        $data['Item']['item_category_id'] . "');");
+          $this->Session->setFlash(__('Action has been reversed and the item has been added to the inventory.'));
         } else {
           $this->Category->query("INSERT INTO inventario.categories (category_id, category_description, category_level, category_parent_id) VALUES ('" .
                        $data['Category']['category_id'] . "', '" .
                        $data['Category']['category_description'] . "', '" .
                        $data['Category']['category_level'] . "', '" .
                        $data['Category']['category_parent_id'] . "');");
+          $this->Session->setFlash(__('Action has been reversed and the category has been added to the inventory.'));
         }
       break;
     }

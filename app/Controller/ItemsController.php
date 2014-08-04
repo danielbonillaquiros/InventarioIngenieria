@@ -21,9 +21,18 @@ class ItemsController extends UndoController {
  *
  * @return void
  */
-	public function index() {
+	public function index($profile = null) {
 		$this->Item->recursive = 0;
 		$this->set('items', $this->Paginator->paginate());
+
+    switch ($profile) {
+      case "basic":
+        $this->render("basicindex");
+      break;
+      case "editor":
+        $this->render("editorindex");
+      break;
+    }
 	}
 
 /**
@@ -33,12 +42,21 @@ class ItemsController extends UndoController {
  * @param string $id
  * @return void
  */
-	public function view($id = null) {
+	public function view($id = null, $profile = null) {
 		if (!$this->Item->exists($id)) {
 			throw new NotFoundException(__('Invalid item'));
 		}
 		$options = array('conditions' => array('Item.' . $this->Item->primaryKey => $id));
 		$this->set('item', $this->Item->find('first', $options));
+
+    switch ($profile) {
+      case "basic":
+        $this->render("basicview");
+      break;
+      case "editor":
+        $this->render("editorview");
+      break;
+    }
 	}
 
 /**
@@ -79,11 +97,11 @@ class ItemsController extends UndoController {
 			throw new NotFoundException(__('Invalid item'));
 		}
 		if ($this->request->is(array('post', 'put'))) {
-			$data = $this->request->data['Item'];
-      if (!$data['item_picture']['name']) {
-        unset($data['item_picture']);
+			$___data = $this->request->data['Item'];
+      if (!$___data['item_picture']['name']) {
+        unset($___data['item_picture']);
       }
-			if ($this->Item->save($data)) {
+			if ($this->Item->save($___data)) {
 				$this->Session->setFlash(__('The item has been saved.'));
         $this->createMemento('edit', 'item', $data);
 				return $this->redirect(array('action' => 'index'));
