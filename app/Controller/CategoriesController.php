@@ -1,5 +1,8 @@
 <?php
 App::uses('UndoController', 'Controller');
+
+include('AddObject.php');
+
 /**
  * Categories Controller
  *
@@ -65,19 +68,8 @@ class CategoriesController extends UndoController {
  * @return void
  */
 	public function add() {
-    ////////////esto debe pasarse a otra clase, pasando por parametro el modelo
-		if ($this->request->is('post')) {
-			$this->Category->create();
-			if ($this->Category->save($this->request->data)) {
-				$this->Session->setFlash(__('The category has been saved.'));
-        $this->createMemento('add', 'category', array('id' => $this->Category->id));
-				return $this->redirect(array('action' => 'index'));
-			} else {
-				$this->Session->setFlash(__('The category could not be saved. Please, try again.'));
-			}
-		}
-    $categories = $this->Category->find('list');
-    $this->set(compact('categories'));
+    $add = new AddObject();
+    $add->add($this);
 	}
 
 /**

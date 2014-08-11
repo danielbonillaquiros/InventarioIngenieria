@@ -1,5 +1,8 @@
 <?php
 App::uses('UndoController', 'Controller');
+
+include('AddObject.php');
+
 /**
  * Items Controller
  *
@@ -65,23 +68,8 @@ class ItemsController extends UndoController {
  * @return void
  */
 	public function add() {
-		if ($this->request->is('post')) {
-			$this->Item->create();
-      $data = $this->request->data['Item'];
-      if (!$data['item_picture']['name']) {
-        unset($data['item_picture']);
-      }
-			if ($this->Item->save($data)) {
-				$this->Session->setFlash(__('The item has been saved.'));
-        $this->createMemento('add', 'item', array('id' => $this->Item->id));
-				return $this->redirect(array('action' => 'index'));
-			} else {
-				$this->Session->setFlash(__('The item could not be saved. Please, try again.'));
-			}
-		}
-		$units = $this->Item->Unit->find('list');
-		$categories = $this->Item->Category->find('list');
-		$this->set(compact('units', 'categories'));
+		$add = new AddObject();
+    $add->add($this);
 	}
 
 /**
