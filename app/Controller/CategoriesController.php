@@ -2,6 +2,7 @@
 App::uses('UndoController', 'Controller');
 
 include('AddObject.php');
+include('EditObject.php');
 
 /**
  * Categories Controller
@@ -68,8 +69,8 @@ class CategoriesController extends UndoController {
  * @return void
  */
 	public function add() {
-    $add = new AddObject();
-    $add->add($this, "category");
+    $addInstance = new AddObject();
+    $addInstance->add($this, "category");
 	}
 
 /**
@@ -80,24 +81,8 @@ class CategoriesController extends UndoController {
  * @return void
  */
 	public function edit($id = null) {
-    $data = $this->Category->find('first', array('conditions' => array('Category.category_id' => $id)));
-		if (!$this->Category->exists($id)) {
-			throw new NotFoundException(__('Invalid category'));
-		}
-		if ($this->request->is(array('post', 'put'))) {
-			if ($this->Category->save($this->request->data)) {
-				$this->Session->setFlash(__('The category has been saved.'));
-        $this->createMemento('edit', 'category', $data);
-				return $this->redirect(array('action' => 'index'));
-			} else {
-				$this->Session->setFlash(__('The category could not be saved. Please, try again.'));
-			}
-		} else {
-			$options = array('conditions' => array('Category.' . $this->Category->primaryKey => $id));
-			$this->request->data = $this->Category->find('first', $options);
-		}
-    $categories = $this->Category->find('list');
-    $this->set(compact('categories'));
+    $editInstance = new EditObject();
+    $editInstance->edit($this, "category", $id);
 	}
 
 /**
