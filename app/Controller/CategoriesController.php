@@ -70,7 +70,7 @@ class CategoriesController extends UndoController {
  */
 	public function add() {
     $addInstance = new AddObject();
-    $addInstance->add($this, "category");
+    return $addInstance->add($this, "category");
 	}
 
 /**
@@ -82,7 +82,7 @@ class CategoriesController extends UndoController {
  */
 	public function edit($id = null) {
     $editInstance = new EditObject();
-    $editInstance->edit($this, "category", $id);
+    return $editInstance->edit($this, "category", $id);
 	}
 
 /**
@@ -93,31 +93,8 @@ class CategoriesController extends UndoController {
  * @return void
  */
 	public function delete($id = null) {
-		$this->Category->id = $id;
-    $data = $this->Category->find('first', array('conditions' => array('Category.category_id' => $id)));
-    $data['id'] = $data['Category']['category_id'];
-		if (!$this->Category->exists()) {
-			throw new NotFoundException(__('Invalid category'));
-		}
-		$this->request->allowMethod('post', 'delete');
-		if ($this->Category->delete()) {
-			$this->Session->setFlash(__('The category has been deleted.'));
-      $this->createMemento('delete', 'category', $data);
-
-      // set items category with this category to Not categorized
-      /*$items = $this->find('all', array('conditions' => array('Item.item_category_id' => $id)));
-      if(count($items) > 0) {
-        foreach($items as $item) {
-          $this->Item->query("UPDATE inventario.items SET " .
-                       "item_category_id = '-1' " .
-                       "WHERE items.item_id = '" . $item['item_id'] . "';");
-        }
-      }*/
-
-		} else {
-			$this->Session->setFlash(__('The category could not be deleted. Please, try again.'));
-		}
-		return $this->redirect(array('action' => 'index'));
+		$deleteInstance = new DeleteObject();
+    return $deleteInstance->delete($this, "category", $id);
 	}
 
   public function setMemento() {

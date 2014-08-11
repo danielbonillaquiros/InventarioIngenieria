@@ -70,7 +70,7 @@ class ItemsController extends UndoController {
  */
 	public function add() {
 		$addInstance = new AddObject();
-    $addInstance->add($this, "item");
+    return $addInstance->add($this, "item");
 	}
 
 /**
@@ -82,7 +82,7 @@ class ItemsController extends UndoController {
  */
 	public function edit($id = null) {
     $editInstance = new EditObject();
-    $editInstance->edit($this, "item", $id);
+    return $editInstance->edit($this, "item", $id);
 	}
 
 /**
@@ -93,20 +93,8 @@ class ItemsController extends UndoController {
  * @return void
  */
 	public function delete($id = null) {
-		$this->Item->id = $id;
-    $data = $this->Item->find('first', array('conditions' => array('Item.item_id' => $id)));
-    $data['id'] = $data['Item']['item_id'];
-		if (!$this->Item->exists()) {
-			throw new NotFoundException(__('Invalid item'));
-		}
-		$this->request->allowMethod('post', 'delete');
-		if ($this->Item->delete()) {
-			$this->Session->setFlash(__('The item has been deleted.'));
-      $this->createMemento('delete', 'item', $data);
-		} else {
-			$this->Session->setFlash(__('The item could not be deleted. Please, try again.'));
-		}
-		return $this->redirect(array('action' => 'index'));
+		$deleteInstance = new DeleteObject();
+    return $deleteInstance->delete($this, "category", $id);
 	}
 
   public function setMemento() {
