@@ -13,17 +13,6 @@ class DeleteObject {
       if ($model->Category->delete()) {
         $model->Session->setFlash(__('The category has been deleted.'));
         $model->createMemento('delete', 'category', $data);
-
-        // set items category with model category to Not categorized
-        /*$items = $model->find('all', array('conditions' => array('Item.item_category_id' => $id)));
-        if(count($items) > 0) {
-          foreach($items as $item) {
-            $model->Item->query("UPDATE inventario.items SET " .
-                         "item_category_id = '-1' " .
-                         "WHERE items.item_id = '" . $item['item_id'] . "';");
-          }
-        }*/
-
       } else {
         $model->Session->setFlash(__('The category could not be deleted. Please, try again.'));
       }
