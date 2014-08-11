@@ -1,7 +1,7 @@
 <?php
 
 class AddObject {
-  public function add($model) {
+  public function add($model, $type) {
     if($type == "category") {
       if ($model->request->is('post')) {
         $model->Category->create();

@@ -69,7 +69,7 @@ class ItemsController extends UndoController {
  */
 	public function add() {
 		$add = new AddObject();
-    $add->add($this);
+    $add->add($this, "item");
 	}
 
 /**
