@@ -1,7 +1,7 @@
 <?php
 
 class DeleteObject {
-  delete($model, $type, $id) {
+  public function delete($model, $type, $id) {
     if($type == "category") {
       $model->Category->id = $id;
       $data = $model->Category->find('first', array('conditions' => array('Category.category_id' => $id)));

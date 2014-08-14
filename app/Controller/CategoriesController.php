@@ -3,6 +3,7 @@ App::uses('UndoController', 'Controller');
 
 include('AddObject.php');
 include('EditObject.php');
+include('DeleteObject.php');
 
 /**
  * Categories Controller

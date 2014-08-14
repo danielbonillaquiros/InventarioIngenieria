@@ -3,6 +3,7 @@ App::uses('UndoController', 'Controller');
 
 include('AddObject.php');
 include('EditObject.php');
+include('DeleteObject.php');
 
 /**
  * Items Controller
@@ -94,7 +95,7 @@ class ItemsController extends UndoController {
  */
 	public function delete($id = null) {
 		$deleteInstance = new DeleteObject();
-    return $deleteInstance->delete($this, "category", $id);
+    return $deleteInstance->delete($this, "item", $id);
 	}
 
   public function setMemento() {
