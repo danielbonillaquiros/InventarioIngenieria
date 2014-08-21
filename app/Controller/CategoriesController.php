@@ -1,5 +1,9 @@
 <?php
-App::uses('UndoController', 'Controller');
+App::uses('AppController', 'Controller');
+App::uses('AdvancedProfile', 'Controller/Decorator');
+App::uses('EditorProfile', 'Controller/Decorator');
+App::uses('BasicProfile', 'Controller/Decorator');
+
 /**
  * Categories Controller
  *
@@ -7,7 +11,7 @@ App::uses('UndoController', 'Controller');
  * @property PaginatorComponent $Paginator
  * @property SessionComponent $Session
  */
-class CategoriesController extends UndoController {
+class CategoriesController extends AppController {
 
 /**
  * Components
@@ -22,15 +26,18 @@ class CategoriesController extends UndoController {
  * @return void
  */
 	public function index($profile = null) {
-		$this->Category->recursive = 0;
-		$this->set('categories', $this->Paginator->paginate());
-
     switch ($profile) {
+      case null:
+        $advancedProfile = new AdvancedProfile();
+        $advancedProfile->categoriesIndex($this, $profile);
+      break;
       case "basic":
-        $this->render("basicindex");
+        $basicProfile = new BasicProfile();
+        $basicProfile->categoriesIndex($this, $profile);
       break;
       case "editor":
-        $this->render("editorindex");
+        $editorProfile = new EditorProfile();
+        $editorProfile->categoriesIndex($this, $profile);
       break;
     }
 	}
@@ -43,18 +50,18 @@ class CategoriesController extends UndoController {
  * @return void
  */
 	public function view($id = null, $profile = null) {
-		if (!$this->Category->exists($id)) {
-			throw new NotFoundException(__('Invalid category'));
-		}
-		$options = array('conditions' => array('Category.' . $this->Category->primaryKey => $id));
-		$this->set('category', $this->Category->find('first', $options));
-
-    switch ($profile) {
+		switch($profile) {
+      case null:
+        $advancedProfile = new AdvancedProfile();
+        $advancedProfile->categoriesView($this, $id, $profile);
+      break;
       case "basic":
-        $this->render("basicview");
+        $basicProfile = new BasicProfile();
+        $basicProfile->categoriesView($this, $id, $profile);
       break;
       case "editor":
-        $this->render("editorview");
+        $editorProfile = new EditorProfile();
+        $editorProfile->categoriesView($this, $id, $profile);
       break;
     }
 	}
@@ -65,19 +72,8 @@ class CategoriesController extends UndoController {
  * @return void
  */
 	public function add() {
-    ////////////esto debe pasarse a otra clase, pasando por parametro el modelo
-		if ($this->request->is('post')) {
-			$this->Category->create();
-			if ($this->Category->save($this->request->data)) {
-				$this->Session->setFlash(__('The category has been saved.'));
-        $this->createMemento('add', 'category', array('id' => $this->Category->id));
-				return $this->redirect(array('action' => 'index'));
-			} else {
-				$this->Session->setFlash(__('The category could not be saved. Please, try again.'));
-			}
-		}
-    $categories = $this->Category->find('list');
-    $this->set(compact('categories'));
+    $advancedProfile = new AdvancedProfile();
+    return $advancedProfile->categoriesAdd($this);
 	}
 
 /**
@@ -87,25 +83,17 @@ class CategoriesController extends UndoController {
  * @param string $id
  * @return void
  */
-	public function edit($id = null) {
-    $data = $this->Category->find('first', array('conditions' => array('Category.category_id' => $id)));
-		if (!$this->Category->exists($id)) {
-			throw new NotFoundException(__('Invalid category'));
-		}
-		if ($this->request->is(array('post', 'put'))) {
-			if ($this->Category->save($this->request->data)) {
-				$this->Session->setFlash(__('The category has been saved.'));
-        $this->createMemento('edit', 'category', $data);
-				return $this->redirect(array('action' => 'index'));
-			} else {
-				$this->Session->setFlash(__('The category could not be saved. Please, try again.'));
-			}
-		} else {
-			$options = array('conditions' => array('Category.' . $this->Category->primaryKey => $id));
-			$this->request->data = $this->Category->find('first', $options);
-		}
-    $categories = $this->Category->find('list');
-    $this->set(compact('categories'));
+	public function edit($id = null, $profile = null) {
+    switch($profile) {
+      case null:
+        $advancedProfile = new AdvancedProfile();
+        return $advancedProfile->categoriesEdit($this, $id, $profile);
+      break;
+      case "editor":
+        $editorProfile = new EditorProfile();
+        return $editorProfile->categoriesEdit($this, $id, $profile);
+      break;
+    }
 	}
 
 /**
@@ -116,34 +104,7 @@ class CategoriesController extends UndoController {
  * @return void
  */
 	public function delete($id = null) {
-		$this->Category->id = $id;
-    $data = $this->Category->find('first', array('conditions' => array('Category.category_id' => $id)));
-    $data['id'] = $data['Category']['category_id'];
-		if (!$this->Category->exists()) {
-			throw new NotFoundException(__('Invalid category'));
-		}
-		$this->request->allowMethod('post', 'delete');
-		if ($this->Category->delete()) {
-			$this->Session->setFlash(__('The category has been deleted.'));
-      $this->createMemento('delete', 'category', $data);
-
-      // set items category with this category to Not categorized
-      /*$items = $this->find('all', array('conditions' => array('Item.item_category_id' => $id)));
-      if(count($items) > 0) {
-        foreach($items as $item) {
-          $this->Item->query("UPDATE inventario.items SET " .
-                       "item_category_id = '-1' " .
-                       "WHERE items.item_id = '" . $item['item_id'] . "';");
-        }
-      }*/
-
-		} else {
-			$this->Session->setFlash(__('The category could not be deleted. Please, try again.'));
-		}
-		return $this->redirect(array('action' => 'index'));
+		$advancedProfile = new AdvancedProfile();
+    return $advancedProfile->categoriesDelete($this, $id);
 	}
-
-  public function setMemento() {
-    parent::setMemento();
-  }
 }

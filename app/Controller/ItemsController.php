@@ -1,5 +1,9 @@
 <?php
-App::uses('UndoController', 'Controller');
+App::uses('AppController', 'Controller');
+App::uses('AdvancedProfile', 'Controller/Decorator');
+App::uses('EditorProfile', 'Controller/Decorator');
+App::uses('BasicProfile', 'Controller/Decorator');
+
 /**
  * Items Controller
  *
@@ -7,8 +11,7 @@ App::uses('UndoController', 'Controller');
  * @property PaginatorComponent $Paginator
  * @property SessionComponent $Session
  */
-class ItemsController extends UndoController {
-
+class ItemsController extends AppController {
 /**
  * Components
  *
@@ -22,15 +25,18 @@ class ItemsController extends UndoController {
  * @return void
  */
 	public function index($profile = null) {
-		$this->Item->recursive = 0;
-		$this->set('items', $this->Paginator->paginate());
-
     switch ($profile) {
+      case null:
+        $advancedProfile = new AdvancedProfile();
+        $advancedProfile->itemsIndex($this, $profile);
+      break;
       case "basic":
-        $this->render("basicindex");
+        $basicProfile = new BasicProfile();
+        $basicProfile->itemsIndex($this, $profile);
       break;
       case "editor":
-        $this->render("editorindex");
+        $editorProfile = new EditorProfile();
+        $editorProfile->itemsIndex($this, $profile);
       break;
     }
 	}
@@ -43,18 +49,18 @@ class ItemsController extends UndoController {
  * @return void
  */
 	public function view($id = null, $profile = null) {
-		if (!$this->Item->exists($id)) {
-			throw new NotFoundException(__('Invalid item'));
-		}
-		$options = array('conditions' => array('Item.' . $this->Item->primaryKey => $id));
-		$this->set('item', $this->Item->find('first', $options));
-
-    switch ($profile) {
+		switch ($profile) {
+      case null:
+        $advancedProfile = new AdvancedProfile();
+        $advancedProfile->itemsView($this, $profile);
+      break;
       case "basic":
-        $this->render("basicview");
+        $basicProfile = new BasicProfile();
+        $basicProfile->itemsView($this, $profile);
       break;
       case "editor":
-        $this->render("editorview");
+        $editorProfile = new EditorProfile();
+        $editorProfile->itemsView($this, $profile);
       break;
     }
 	}
@@ -65,23 +71,8 @@ class ItemsController extends UndoController {
  * @return void
  */
 	public function add() {
-		if ($this->request->is('post')) {
-			$this->Item->create();
-      $data = $this->request->data['Item'];
-      if (!$data['item_picture']['name']) {
-        unset($data['item_picture']);
-      }
-			if ($this->Item->save($data)) {
-				$this->Session->setFlash(__('The item has been saved.'));
-        $this->createMemento('add', 'item', array('id' => $this->Item->id));
-				return $this->redirect(array('action' => 'index'));
-			} else {
-				$this->Session->setFlash(__('The item could not be saved. Please, try again.'));
-			}
-		}
-		$units = $this->Item->Unit->find('list');
-		$categories = $this->Item->Category->find('list');
-		$this->set(compact('units', 'categories'));
+		$advancedProfile = new AdvancedProfile();
+    return $advancedProfile->itemsAdd($this);
 	}
 
 /**
@@ -92,29 +83,16 @@ class ItemsController extends UndoController {
  * @return void
  */
 	public function edit($id = null) {
-    $data = $this->Item->find('first', array('conditions' => array('Item.item_id' => $id)));
-		if (!$this->Item->exists($id)) {
-			throw new NotFoundException(__('Invalid item'));
-		}
-		if ($this->request->is(array('post', 'put'))) {
-			$___data = $this->request->data['Item'];
-      if (!$___data['item_picture']['name']) {
-        unset($___data['item_picture']);
-      }
-			if ($this->Item->save($___data)) {
-				$this->Session->setFlash(__('The item has been saved.'));
-        $this->createMemento('edit', 'item', $data);
-				return $this->redirect(array('action' => 'index'));
-			} else {
-				$this->Session->setFlash(__('The item could not be saved. Please, try again.'));
-			}
-		} else {
-			$options = array('conditions' => array('Item.' . $this->Item->primaryKey => $id));
-			$this->request->data = $this->Item->find('first', $options);
-		}
-		$units = $this->Item->Unit->find('list');
-		$categories = $this->Item->Category->find('list');
-		$this->set(compact('units', 'categories'));
+    switch($profile) {
+      case null:
+        $advancedProfile = new AdvancedProfile();
+        return $advancedProfile->itemsEdit($this, $id, $profile);
+      break;
+      case "editor":
+        $editorProfile = new EditorProfile();
+        return $editorProfile->itemsEdit($this, $id, $profile);
+      break;
+    }
 	}
 
 /**
@@ -125,23 +103,7 @@ class ItemsController extends UndoController {
  * @return void
  */
 	public function delete($id = null) {
-		$this->Item->id = $id;
-    $data = $this->Item->find('first', array('conditions' => array('Item.item_id' => $id)));
-    $data['id'] = $data['Item']['item_id'];
-		if (!$this->Item->exists()) {
-			throw new NotFoundException(__('Invalid item'));
-		}
-		$this->request->allowMethod('post', 'delete');
-		if ($this->Item->delete()) {
-			$this->Session->setFlash(__('The item has been deleted.'));
-      $this->createMemento('delete', 'item', $data);
-		} else {
-			$this->Session->setFlash(__('The item could not be deleted. Please, try again.'));
-		}
-		return $this->redirect(array('action' => 'index'));
+		$advancedProfile = new AdvancedProfile();
+    return $advancedProfile->itemsDelete($this, $id);
 	}
-
-  public function setMemento() {
-    parent::setMemento();
-  }
 }
