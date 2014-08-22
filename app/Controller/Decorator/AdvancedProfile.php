@@ -18,7 +18,6 @@ class AdvancedProfile {
 			$controller->Category->create();
 			if ($controller->Category->save($controller->request->data)) {
 				$controller->Session->setFlash(__('The category has been saved.'));
-        $controller->createMemento('add', 'category', array('id' => $controller->Category->id));
 				return $controller->redirect(array('action' => 'index'));
 			} else {
 				$controller->Session->setFlash(__('The category could not be saved. Please, try again.'));
@@ -68,7 +67,6 @@ class AdvancedProfile {
       }
 			if ($controller->Item->save($data)) {
 				$controller->Session->setFlash(__('The item has been saved.'));
-        $controller->createMemento('add', 'item', array('id' => $controller->Item->id));
 				return $controller->redirect(array('action' => 'index'));
 			} else {
 				$controller->Session->setFlash(__('The item could not be saved. Please, try again.'));

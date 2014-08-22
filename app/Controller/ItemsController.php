@@ -52,15 +52,15 @@ class ItemsController extends AppController {
 		switch ($profile) {
       case null:
         $advancedProfile = new AdvancedProfile();
-        $advancedProfile->itemsView($this, $profile);
+        $advancedProfile->itemsView($this, $id, $profile);
       break;
       case "basic":
         $basicProfile = new BasicProfile();
-        $basicProfile->itemsView($this, $profile);
+        $basicProfile->itemsView($this, $id, $profile);
       break;
       case "editor":
         $editorProfile = new EditorProfile();
-        $editorProfile->itemsView($this, $profile);
+        $editorProfile->itemsView($this, $id, $profile);
       break;
     }
 	}
@@ -82,7 +82,7 @@ class ItemsController extends AppController {
  * @param string $id
  * @return void
  */
-	public function edit($id = null) {
+	public function edit($id = null, $profile = null) {
     switch($profile) {
       case null:
         $advancedProfile = new AdvancedProfile();
